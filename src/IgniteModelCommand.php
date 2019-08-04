@@ -26,6 +26,7 @@ class IgniteModelCommand extends Command
      */
     protected function getStub($type)
     {
+        echo base_path('vendor');
         return file_get_contents(resource_path("stubs/$type.stub"));
     }
 
