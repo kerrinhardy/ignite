@@ -67,14 +67,13 @@ class IgniteModelCommand extends Command
             $this->getStub('Controller')
         );
 
-        $directoryPath = app_path("/Http/Controllers/API/{$name}Controller.php");
+        $directoryPath = app_path("/Http/Controllers/API/");
 
-        if (File::isDirectory($directoryPath)) {
-            file_put_contents($directoryPath, $controllerTemplate);
-        } else {
+        if(!File::exists($directoryPath)) {
             File::makeDirectory($directoryPath, 0770, true);
-            file_put_contents($directoryPath, $controllerTemplate);
         }
+
+        file_put_contents($directoryPath . $name . 'Controller.php', $controllerTemplate);
     }
 
     /**
