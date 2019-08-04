@@ -40,7 +40,7 @@ class {{modelName}}Controller extends Controller
      */
     public function show({{modelName}} ${{modelNameSingularLowerCase}})
     {
-        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail($id);
+        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail(${{modelNameSingularLowerCase);
 
         return response()->json(${{modelNameSingularLowerCase}});
     }
@@ -52,9 +52,9 @@ class {{modelName}}Controller extends Controller
      * @param  \App\{{modelName}}  ${{modelNameSingularLowerCase}}
      * @return \Illuminate\Http\Response
      */
-    public function update({{modelName}}Request $request, $id)
+    public function update({{modelName}}Request $request, {{modelName}} ${{modelNameSingularLowerCase}})
     {
-        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail($id);
+        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail(${{modelNameSingularLowerCase);
 
         ${{modelNameSingularLowerCase}}->update($request->all());
 
@@ -64,12 +64,12 @@ class {{modelName}}Controller extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Tag  $tag
+     * @param  \App\{{modelName}}  ${{modelNameSingularLowerCase}}
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy({{modelName}} ${{modelNameSingularLowerCase}})
     {
-        {{modelName}}::destroy($id);
+        {{modelName}}::destroy(${{modelNameSingularLowerCase);
 
         return response()->json(null, 204);
     }
