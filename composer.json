@@ -12,12 +12,16 @@
   "require": {
     "illuminate/support": "5.8.*"
   },
+  "autoload": {
+    "psr-4": {
+      "Kerrinhardy\\Ignite\\": "src/"
+    }
+  },
   "extra": {
     "laravel": {
       "providers": [
-        "kerrinhardy\\ignite\\IgniteServiceProvider"
-      ],
-      "aliases": {}
+        "Kerrinhardy\\Ignite\\IgniteServiceProvider"
+      ]
     }
   },
   "require": {}
