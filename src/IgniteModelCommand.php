@@ -108,8 +108,13 @@ class IgniteModelCommand extends Command
         $name = $this->argument('name');
 
         $this->controller($name);
+        $this->info(' API Controller for ' . $name . ' created successfully.');
+
         $this->model($name);
+        $this->info(' Model for ' . $name . ' created successfully.');
+
         $this->request($name);
+        $this->info('Request for ' . $name . ' created successfully.');
 
 //        File::append(base_path('routes/api.php'), 'Route::resource(\'' . strtolower(Str::plural($name)) . "', '{$name}Controller');");
     }
