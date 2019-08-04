@@ -1,0 +1,24 @@
+{
+  "name": "kerrinhardy/ignite",
+  "description": "CRUD generator for Laravel 5.8 including routes, models, migrations, requests, controllers, views, languages and form-requests with unit and feature tests.",
+  "type": "laravel",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Kerrin Hardy",
+      "email": "info@kerrinhardy.com"
+    }
+  ],
+  "require": {
+    "illuminate/support": "5.8.*"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Kerrinhardy\\Ignite\\IgniteServiceProvider"
+      ],
+      "aliases": {}
+    }
+  },
+  "require": {}
+}
