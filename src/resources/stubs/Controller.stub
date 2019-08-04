@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Http\Requests\{{modelName}}Request;
 use App\{{modelName}};
@@ -40,7 +40,7 @@ class {{modelName}}Controller extends Controller
      */
     public function show({{modelName}} ${{modelNameSingularLowerCase}})
     {
-        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail(${{modelNameSingularLowerCase);
+        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail(${{modelNameSingularLowerCase}});
 
         return response()->json(${{modelNameSingularLowerCase}});
     }
@@ -54,7 +54,7 @@ class {{modelName}}Controller extends Controller
      */
     public function update({{modelName}}Request $request, {{modelName}} ${{modelNameSingularLowerCase}})
     {
-        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail(${{modelNameSingularLowerCase);
+        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail(${{modelNameSingularLowerCase}});
 
         ${{modelNameSingularLowerCase}}->update($request->all());
 
@@ -69,7 +69,7 @@ class {{modelName}}Controller extends Controller
      */
     public function destroy({{modelName}} ${{modelNameSingularLowerCase}})
     {
-        {{modelName}}::destroy(${{modelNameSingularLowerCase);
+        {{modelName}}::destroy(${{modelNameSingularLowerCase}});
 
         return response()->json(null, 204);
     }
