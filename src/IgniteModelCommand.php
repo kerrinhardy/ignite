@@ -107,9 +107,9 @@ class IgniteModelCommand extends Command
     {
         $name = $this->argument('name');
 
-        $this->info($name);
+        $this->info(base_path('vendor') . '/');
 
-        $this->info(base_path('vendor'));
+        $this->info(__DIR__.'/path/to/assets');
 
 //        $this->controller($name);
 //        $this->model($name);
