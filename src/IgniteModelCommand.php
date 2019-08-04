@@ -26,7 +26,7 @@ class IgniteModelCommand extends Command
      */
     protected function getStub($type)
     {
-        return file_get_contents(__DIR__ . "/resources/stubs/" . $type.stub);
+        return file_get_contents(__DIR__ . '/resources/stubs/' . $type . '.stub');
     }
 
     /**
