@@ -72,7 +72,7 @@ class IgniteModelCommand extends Command
         if (File::isDirectory($directoryPath)) {
             file_put_contents($directoryPath, $controllerTemplate);
         } else {
-            File::makeDirectory($directoryPath);
+            File::makeDirectory($directoryPath, 0770, true);
             file_put_contents($directoryPath, $controllerTemplate);
         }
     }
