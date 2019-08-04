@@ -26,7 +26,6 @@ class IgniteModelCommand extends Command
      */
     protected function getStub($type)
     {
-        echo base_path('vendor');
         return file_get_contents(resource_path("stubs/$type.stub"));
     }
 
@@ -107,6 +106,8 @@ class IgniteModelCommand extends Command
     public function handle()
     {
         $name = $this->argument('name');
+
+        $this->info(base_path('vendor'));
 
         $this->controller($name);
         $this->model($name);
