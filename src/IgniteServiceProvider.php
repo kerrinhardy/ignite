@@ -1,16 +1,12 @@
 <?php
 
-namespace kerrinhardy\ignite;
+namespace Kerrinhardy\Ignite;
 
 use Illuminate\Support\ServiceProvider;
-use kerrinhardy\ignite\Commands\IgniteModelCommand;
+use Kerrinhardy\Ignite\IgniteModelCommand;
 
 class IgniteServiceProvider extends ServiceProvider
 {
-    protected $commands = [
-        'Kerrinhardy\Ignite\Commands\IgniteModelCommand::Class',
-    ];
-
     /**
      * Register services.
      *
@@ -18,7 +14,7 @@ class IgniteServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->commands($this->commands);
+        //
     }
 
     /**
