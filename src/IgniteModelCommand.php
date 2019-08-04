@@ -1,6 +1,6 @@
 <?php
 
-namespace Kerrinhardy\Ignite\Commands;
+namespace Kerrinhardy\Ignite;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
