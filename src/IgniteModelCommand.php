@@ -66,7 +66,7 @@ class IgniteModelCommand extends Command
             $this->getStub('Controller')
         );
 
-        file_put_contents(app_path("/Http/Controllers/{$name}Controller.php"), $controllerTemplate);
+        file_put_contents(app_path("/Http/Controllers/API/{$name}Controller.php"), $controllerTemplate);
     }
 
     /**
