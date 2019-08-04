@@ -1,5 +1,5 @@
 {
-  "name": "kerrinhardy/ignite",
+  "name": "kerrinhardy/laravel-ignite-generator",
   "description": "CRUD generator for Laravel 5.8 including routes, models, migrations, requests, controllers, views, languages and form-requests with unit and feature tests.",
   "type": "laravel",
   "license": "MIT",
@@ -15,7 +15,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Kerrinhardy\\Ignite\\IgniteServiceProvider"
+        "Kerrinhardy\\laravel-ignite-generator\\IgniteServiceProvider"
       ],
       "aliases": {}
     }
