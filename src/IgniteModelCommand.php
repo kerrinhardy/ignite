@@ -24,69 +24,69 @@ class IgniteModelCommand extends Command
     /**
      * Get the relevant stub file for the command.
      */
-//    protected function getStub($type)
-//    {
-//        return file_get_contents(resource_path("stubs/$type.stub"));
-//    }
+    protected function getStub($type)
+    {
+        return file_get_contents(__DIR__ . "/resources/stubs/" . $type.stub);
+    }
 
     /**
      * Create a new Model from the stub and the name entered in the command.
      *
      * @var string
      */
-//    protected function model($name)
-//    {
-//        $modelTemplate = str_replace(
-//            ['{{modelName}}'],
-//            [$name],
-//            $this->getStub('Model')
-//        );
-//
-//        file_put_contents(app_path("/{$name}.php"), $modelTemplate);
-//    }
+    protected function model($name)
+    {
+        $modelTemplate = str_replace(
+            ['{{modelName}}'],
+            [$name],
+            $this->getStub('Model')
+        );
+
+        file_put_contents(app_path("/{$name}.php"), $modelTemplate);
+    }
 
     /**
      * Create a new Controller from the stub and the name entered in the command.
      *
      * @var string
      */
-//    protected function controller($name)
-//    {
-//        $controllerTemplate = str_replace(
-//            [
-//                '{{modelName}}',
-//                '{{modelNamePluralLowerCase}}',
-//                '{{modelNameSingularLowerCase}}'
-//            ],
-//            [
-//                $name,
-//                strtolower(Str::plural($name)),
-//                strtolower($name)
-//            ],
-//            $this->getStub('Controller')
-//        );
-//
-//        file_put_contents(app_path("/Http/Controllers/{$name}Controller.php"), $controllerTemplate);
-//    }
+    protected function controller($name)
+    {
+        $controllerTemplate = str_replace(
+            [
+                '{{modelName}}',
+                '{{modelNamePluralLowerCase}}',
+                '{{modelNameSingularLowerCase}}'
+            ],
+            [
+                $name,
+                strtolower(Str::plural($name)),
+                strtolower($name)
+            ],
+            $this->getStub('Controller')
+        );
+
+        file_put_contents(app_path("/Http/Controllers/{$name}Controller.php"), $controllerTemplate);
+    }
 
     /**
      * Create a new Request from the stub and the name entered in the command.
      *
      * @var string
      */
-//    protected function request($name)
-//    {
-//        $requestTemplate = str_replace(
-//            ['{{modelName}}'],
-//            [$name],
-//            $this->getStub('Request')
-//        );
-//
-//        if(!file_exists($path = app_path('/Http/Requests')))
-//            mkdir($path, 0770, true);
-//
-//        file_put_contents(app_path("/Http/Requests/{$name}Request.php"), $requestTemplate);
-//    }
+    protected function request($name)
+    {
+        $requestTemplate = str_replace(
+            ['{{modelName}}'],
+            [$name],
+            $this->getStub('Request')
+        );
+
+        if(!file_exists($path = app_path('/Http/Requests')))
+            mkdir($path, 0770, true);
+
+        file_put_contents(app_path("/Http/Requests/{$name}Request.php"), $requestTemplate);
+    }
 
     /**
      * Create a new command instance.
@@ -107,14 +107,10 @@ class IgniteModelCommand extends Command
     {
         $name = $this->argument('name');
 
-        $this->info(base_path('vendor') . '/');
+        $this->controller($name);
+        $this->model($name);
+        $this->request($name);
 
-        $this->info(__DIR__.'/path/to/assets');
-
-//        $this->controller($name);
-//        $this->model($name);
-//        $this->request($name);
-//
-//        File::append(base_path('routes/api.php'), 'Route::resource(\'' . strtolower(Str::plural($name)) . "', '{$name}Controller');");
+        File::append(base_path('routes/api.php'), 'Route::resource(\'' . strtolower(Str::plural($name)) . "', '{$name}Controller');");
     }
 }
