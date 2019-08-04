@@ -69,7 +69,7 @@ class IgniteModelCommand extends Command
 
         $directoryPath = app_path("/Http/Controllers/API/");
 
-        if(!File::exists($directoryPath)) {
+        if (!File::exists($directoryPath)) {
             File::makeDirectory($directoryPath, 0770, true);
         }
 
@@ -116,10 +116,10 @@ class IgniteModelCommand extends Command
         $name = $this->argument('name');
 
         $this->controller($name);
-        $this->info(' API Controller for ' . $name . ' created successfully.');
+        $this->info('API Controller for ' . $name . ' created successfully.');
 
         $this->model($name);
-        $this->info(' Model for ' . $name . ' created successfully.');
+        $this->info('Model for ' . $name . ' created successfully.');
 
         $this->request($name);
         $this->info('Request for ' . $name . ' created successfully.');
