@@ -1,9 +1,9 @@
 <?php
 
-namespace Kerrinhardy\Ignite;
+namespace kerrinhardy\ignite;
 
 use Illuminate\Support\ServiceProvider;
-use Kerrinhardy\Ignite\Commands\IgniteModelCommand;
+use kerrinhardy\ignite\Commands\IgniteModelCommand;
 
 class IgniteServiceProvider extends ServiceProvider
 {
