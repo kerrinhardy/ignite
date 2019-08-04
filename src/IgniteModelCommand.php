@@ -4,6 +4,7 @@ namespace Kerrinhardy\Ignite;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
+use File;
 
 class IgniteModelCommand extends Command
 {
@@ -66,7 +67,14 @@ class IgniteModelCommand extends Command
             $this->getStub('Controller')
         );
 
-        file_put_contents(app_path("/Http/Controllers/API/{$name}Controller.php"), $controllerTemplate);
+        $directoryPath = app_path("/Http/Controllers/API/{$name}Controller.php");
+
+        if (File::isDirectory($directoryPath)) {
+            file_put_contents($directoryPath, $controllerTemplate);
+        } else {
+            File::makeDirectory($directoryPath);
+            file_put_contents($directoryPath, $controllerTemplate);
+        }
     }
 
     /**
@@ -82,8 +90,9 @@ class IgniteModelCommand extends Command
             $this->getStub('Request')
         );
 
-        if(!file_exists($path = app_path('/Http/Requests')))
+        if (!file_exists($path = app_path('/Http/Requests'))) {
             mkdir($path, 0770, true);
+        }
 
         file_put_contents(app_path("/Http/Requests/{$name}Request.php"), $requestTemplate);
     }
@@ -116,6 +125,7 @@ class IgniteModelCommand extends Command
         $this->request($name);
         $this->info('Request for ' . $name . ' created successfully.');
 
-//        File::append(base_path('routes/api.php'), 'Route::resource(\'' . strtolower(Str::plural($name)) . "', '{$name}Controller');");
+        File::append(base_path('routes/api.php'),
+            'Route::resource(\'' . strtolower(Str::plural($name)) . "', '{$name}Controller');");
     }
 }
