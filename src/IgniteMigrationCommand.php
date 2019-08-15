@@ -48,7 +48,7 @@ class IgniteMigrationCommand extends Command
      */
     protected function getPath($name)
     {
-        return base_path() . '/database/migrations/' . $this->getDatePrefix() . '_' . $name . '.php';
+        return base_path() . '/database/migrations/' . $this->getDatePrefix() . '_create_' . Str::plural(strtolower($name)) . '_table.php';
     }
 
     /**
@@ -69,14 +69,13 @@ class IgniteMigrationCommand extends Command
      */
     protected function migration($name, $columns)
     {
-
         $columns = collect($columns);
 
         $migrations = '';
 
         foreach($columns as $column => $type) {
-            if($type == 'String') {
-                $migrations .= '$table->string(\'' . $column . '\'); \n';
+            if($type == 'string') {
+                $migrations .= '$table->string(\'' . $column . '\');' . PHP_EOL;
             }
         }
 
@@ -115,17 +114,17 @@ class IgniteMigrationCommand extends Command
             $i++;
             $col_name[$i] = $this->ask('Column name?');
             if($col_name[$i] != null) {
-                $col_type[$i] = $this->choice('Column type?', ['Boolean', 'dateTimeTz', 'String'], 'String');
+                $col_type[$i] = $this->choice('Column type?', ['boolean', 'dateTimeTz', 'string'], 'String');
             }
         } while ($col_name[$i] != null);
 
         array_pop($col_name);
 
-        $this->info('Columns for ' . $name . ' table created successfully.');
+        $columns = array_combine($col_name, $col_type);
 
-        $this->migration($name, $col_name);
+        $this->migration($name, $columns);
 
-        $this->info('Migration for ' . $name . ' created successfully.');
+        $this->info('Migration for ' . Str::plural(strtolower($name)) . ' table created successfully.');
 
     }
 }
