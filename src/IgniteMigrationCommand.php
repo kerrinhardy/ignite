@@ -74,9 +74,9 @@ class IgniteMigrationCommand extends Command
 
         $migrations = '';
 
-        foreach($columns as $name => $type) {
+        foreach($columns as $column => $type) {
             if($type == 'String') {
-                $migrations .= '$table->string(\'' . $name . '\'); \n';
+                $migrations .= '$table->string(\'' . $column . '\'); \n';
             }
         }
 
