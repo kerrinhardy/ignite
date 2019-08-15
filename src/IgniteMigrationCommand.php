@@ -41,11 +41,11 @@ class IgniteMigrationCommand extends Command
 
         $columns = collect($columns);
 
-        $migrations = [];
+        $migrations = '';
 
         foreach($columns as $name => $type) {
             if($type == 'String') {
-                $migrations = '$table->string(\'' . $name . '\');';
+                $migrations .= '$table->string(\'' . $name . '\'); \n';
             }
         }
 
