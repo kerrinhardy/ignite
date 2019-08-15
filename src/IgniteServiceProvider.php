@@ -27,6 +27,7 @@ class IgniteServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 IgniteModelCommand::class,
+                IgniteMigrationCommand::class
             ]);
         }
     }
