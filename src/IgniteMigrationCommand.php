@@ -41,9 +41,11 @@ class IgniteMigrationCommand extends Command
 
         $columns = collect($columns);
 
-        foreach($columns as $column) {
-            if($column['type'] == 'String') {
-                $migrations[] = '$table->string(\'' . $column['name'] . '\');';
+        $migrations = [];
+
+        foreach($columns as $name => $type) {
+            if($type == 'String') {
+                $migrations[] = '$table->string(\'' . $name . '\');';
             }
         }
 
