@@ -31,6 +31,37 @@ class IgniteMigrationCommand extends Command
     }
 
     /**
+     * Get the date prefix for the migration.
+     *
+     * @return string
+     */
+    protected function getDatePrefix()
+    {
+        return date('Y_m_d_His');
+    }
+
+    /**
+     * Get the full path to the migration.
+     *
+     * @param  string $name
+     * @return string
+     */
+    protected function getPath($name)
+    {
+        return app_path() . '/database/migrations/' . $this->getDatePrefix() . '_' . $name . '.php';
+    }
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
      * Create a new Migration from the stub and the names entered in the command.
      *
      * @var string
@@ -63,38 +94,8 @@ class IgniteMigrationCommand extends Command
             $this->getStub('Migration')
         );
 
-        file_put_contents(getPath($name), $migrationTemplate);
-    }
-
-    /**
-     * Get the date prefix for the migration.
-     *
-     * @return string
-     */
-    protected function getDatePrefix()
-    {
-        return date('Y_m_d_His');
-    }
-
-    /**
-     * Get the full path to the migration.
-     *
-     * @param  string $name
-     * @return string
-     */
-    protected function getPath($name)
-    {
-        return app_path() . '/database/migrations/' . $this->getDatePrefix() . '_' . $name . '.php';
-    }
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
+//        file_put_contents(getPath($name), $migrationTemplate);
+        file_put_contents(app_path() . '/database/migrations/' . $this->getDatePrefix() . '_' . $name . '.php', $migrationTemplate);
     }
 
     /**
