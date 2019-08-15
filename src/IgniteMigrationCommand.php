@@ -105,26 +105,26 @@ class IgniteMigrationCommand extends Command
     public function handle()
     {
         $name = $this->argument('name');
-//
-//        $col_name = [];
-//        $col_type = [];
-//
-//        $i = 0;
-//
-//        do {
-//            $i++;
-//            $col_name[$i] = $this->ask('Column name?');
-//            if($col_name[$i] != null) {
-//                $col_type[$i] = $this->choice('Column type?', ['Boolean', 'dateTimeTz', 'String'], 'String');
-//            }
-//        } while ($col_name[$i] != null);
-//
-//        array_pop($col_name);
+
+        $col_name = [];
+        $col_type = [];
+
+        $i = 0;
+
+        do {
+            $i++;
+            $col_name[$i] = $this->ask('Column name?');
+            if($col_name[$i] != null) {
+                $col_type[$i] = $this->choice('Column type?', ['Boolean', 'dateTimeTz', 'String'], 'String');
+            }
+        } while ($col_name[$i] != null);
+
+        array_pop($col_name);
 
         $this->info('Columns for ' . $name . ' table created successfully.');
 
-//        $this->migration($name, $col_name);
-//        $this->info('Migration for ' . $name . ' created successfully.');
+        $this->migration($name, $col_name);
+        $this->info('Migration for ' . $name . ' created successfully.');
 
     }
 }
