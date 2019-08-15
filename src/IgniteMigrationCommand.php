@@ -48,7 +48,7 @@ class IgniteMigrationCommand extends Command
      */
     protected function getPath($name)
     {
-        return app_path() . '/database/migrations/' . $this->getDatePrefix() . '_' . $name . '.php';
+        return base_path() . '/database/migrations/' . $this->getDatePrefix() . '_' . $name . '.php';
     }
 
     /**
@@ -94,8 +94,7 @@ class IgniteMigrationCommand extends Command
             $this->getStub('Migration')
         );
 
-//        file_put_contents(getPath($name), $migrationTemplate);
-//        file_put_contents(app_path() . '/database/migrations/' . $this->getDatePrefix() . '_' . $name . '.php', $migrationTemplate);
+        file_put_contents(getPath($name), $migrationTemplate);
     }
 
     /**
@@ -124,9 +123,8 @@ class IgniteMigrationCommand extends Command
 
         $this->info('Columns for ' . $name . ' table created successfully.');
 
-        $this->info(app_path() . '/database/migrations/' . $this->getDatePrefix() . '_' . $name . '.php');
+        $this->migration($name, $col_name);
 
-//        $this->migration($name, $col_name);
         $this->info('Migration for ' . $name . ' created successfully.');
 
     }
