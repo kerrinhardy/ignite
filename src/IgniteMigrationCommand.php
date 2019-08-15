@@ -45,7 +45,7 @@ class IgniteMigrationCommand extends Command
 
         foreach($columns as $name => $type) {
             if($type == 'String') {
-                $migrations[] = '$table->string(\'' . $name . '\');';
+                $migrations = '$table->string(\'' . $name . '\');';
             }
         }
 
@@ -120,6 +120,8 @@ class IgniteMigrationCommand extends Command
         } while ($col_name[$i] != null);
 
         array_pop($col_name);
+
+        $this->info('Columns for ' . $name . ' table created successfully.');
 
         $this->migration($name, $col_name);
         $this->info('Migration for ' . $name . ' created successfully.');
