@@ -94,7 +94,7 @@ class IgniteMigrationCommand extends Command
             $this->getStub('Migration')
         );
 
-        file_put_contents(getPath($name), $migrationTemplate);
+        file_put_contents($this->getPath($name), $migrationTemplate);
     }
 
     /**
