@@ -67,16 +67,94 @@ class IgniteMigrationCommand extends Command
      * @var string
      * @var array
      */
-    protected function migration($name, $columns)
+    protected function migration($name, $columns, $other_migrations)
     {
-        $columns = collect($columns);
-
         $migrations = '';
 
-        foreach($columns as $column => $type) {
-            if($type == 'string') {
-                $migrations .= '$table->string(\'' . $column . '\');' . PHP_EOL;
+        $parameters_not_required = [
+            'bigIncrements',
+            'bigInteger',
+            'binary',
+            'boolean',
+            'date',
+            'dateTime',
+            'dateTimeTz',
+            'geometry',
+            'geometryCollection',
+            'increments',
+            'integer',
+            'ipAddress',
+            'json',
+            'jsonb',
+            'lineString',
+            'longText',
+            'macAddress',
+            'mediumIncrements',
+            'mediumInteger',
+            'mediumText',
+            'morphs',
+            'uuidMorphs',
+            'multiLineString',
+            'multiPoint',
+            'multiPolygon',
+            'nullableMorphs',
+            'nullableUuidMorphs',
+            'point',
+            'polygon',
+            'smallIncrements',
+            'smallInteger',
+            'string',
+            'text',
+            'time',
+            'timeTz',
+            'timestamp',
+            'timestampTz',
+            'tinyIncrements',
+            'tinyInteger',
+            'unsignedBigInteger',
+            'unsignedInteger',
+            'unsignedMediumInteger',
+            'unsignedSmallInteger',
+            'unsignedTinyInteger',
+            'uuid',
+            'year'
+        ];
+
+        $parameters_digits = [
+            'decimal',
+            'double',
+            'float',
+            'unsignedDecimal'
+        ];
+
+        foreach ($columns as $column => $type) {
+            if (in_array($type, $parameters_not_required)) {
+                $migrations .= '$table->' . $type . '(\'' . $column . '\');' . PHP_EOL;
             }
+            if (strpos($type, "char") === 0) {
+                $input = explode("-", $type);
+                $migrations .= '$table->' . $input[0] . '(\'' . $column . '\', ' . $input[1] . ');' . PHP_EOL;
+            }
+            if (strpos($type, "string") === 0) {
+                $input = explode("-", $type);
+                $migrations .= '$table->' . $input[0] . '(\'' . $column . '\', ' . $input[1] . ');' . PHP_EOL;
+            }
+            if (in_array($type, $parameters_digits) === 0) {
+                $input = explode("-", $type);
+                $migrations .= '$table->' . $input[0] . '(\'' . $column . '\', ' . $input[1] . ', ' . $input[2] . ');' . PHP_EOL;
+            }
+            if (strpos($type, "enum") === 0) {
+                $input = explode("-", $type);
+                $migrations .= '$table->' . $input[0] . '(\'' . $column . '\', [\'' . $input[1] . '\']);' . PHP_EOL;
+            }
+            if (strpos($type, "set") === 0) {
+                $input = explode("-", $type);
+                $migrations .= '$table->' . $input[0] . '(\'' . $column . '\', [\'' . $input[1] . '\']);' . PHP_EOL;
+            }
+        }
+
+        foreach ($other_migrations as $key => $value) {
+            $migrations .= '$table->' . $value . '();' . PHP_EOL;
         }
 
         $migrationTemplate = str_replace(
@@ -110,11 +188,89 @@ class IgniteMigrationCommand extends Command
 
         $i = 0;
 
+        $options = [
+            'bigIncrements',
+            'bigInteger',
+            'binary',
+            'boolean',
+            'char',
+            'date',
+            'dateTime',
+            'dateTimeTz',
+            'decimal',
+            'double',
+            'enum',
+            'float',
+            'geometry',
+            'geometryCollection',
+            'increments',
+            'integer',
+            'ipAddress',
+            'json',
+            'jsonb',
+            'lineString',
+            'longText',
+            'macAddress',
+            'mediumIncrements',
+            'mediumInteger',
+            'mediumText',
+            'morphs',
+            'uuidMorphs',
+            'multiLineString',
+            'multiPoint',
+            'multiPolygon',
+            'nullableMorphs',
+            'nullableUuidMorphs',
+            'point',
+            'polygon',
+            'set',
+            'smallIncrements',
+            'smallInteger',
+            'string',
+            'text',
+            'time',
+            'timeTz',
+            'timestamp',
+            'timestampTz',
+            'tinyIncrements',
+            'tinyInteger',
+            'unsignedBigInteger',
+            'unsignedDecimal',
+            'unsignedInteger',
+            'unsignedMediumInteger',
+            'unsignedSmallInteger',
+            'unsignedTinyInteger',
+            'uuid',
+            'year'
+        ];
+
+        $rows = array_chunk($options, 6);
+        $headers = ['Column Type', '', '', '', '', ''];
+
         do {
             $i++;
             $col_name[$i] = $this->ask('Column name?');
-            if($col_name[$i] != null) {
-                $col_type[$i] = $this->choice('Column type?', ['boolean', 'dateTimeTz', 'string'], 'String');
+            if ($col_name[$i] != null) {
+                $this->table($headers, $rows);
+                $col_type[$i] = $this->anticipate('Column Type?', $options);
+                if ($col_type[$i] == "char" or $col_type[$i] == "string") {
+                    $col_type[$i] .= '-' . $this->anticipate('Length?', [100, 255]);
+                }
+                if ($col_type[$i] == "decimal" or $col_type[$i] == "double" or $col_type[$i] == "float" or $col_type[$i] == "unsignedDecimal") {
+                    $precision = $this->anticipate('Total digits (precision)?', [8]);
+                    $scale = $this->anticipate('Decimal digits (scale)?', [2]);
+                    $col_type[$i] .= '-' . $precision . '-' . $scale;
+                }
+                if ($col_type[$i] == "enum" or $col_type[$i] == "set") {
+                    $j = 0;
+                    $elements = [];
+                    do {
+                        $j++;
+                        $elements[$j] = $this->ask('Element name?');
+                    } while ($elements[$j] != null);
+                    array_pop($elements);
+                    $col_type[$i] .= '-' . implode('\', \'', $elements);
+                }
             }
         } while ($col_name[$i] != null);
 
@@ -122,9 +278,31 @@ class IgniteMigrationCommand extends Command
 
         $columns = array_combine($col_name, $col_type);
 
-        $this->migration($name, $columns);
+        $this->info('Main columns for ' . $name . ' table created successfully.');
 
-        $this->info('Migration for ' . Str::plural(strtolower($name)) . ' table created successfully.');
+        $other = [];
+        $other_migrations = [];
+
+        $k = 0;
+
+        do {
+            $k++;
+            $other[$k] = $this->confirm('Other migrations?');
+            if ($other[$k] != false) {
+                $other_migrations[$k] = $this->choice('Select migration type?', [
+                    "0" => 'nullableTimestamps',
+                    "1" => 'rememberToken',
+                    "2" => 'softDeletes',
+                    "3" => 'softDeletesTz',
+                    "4" => 'timestamps',
+                    "5" => 'timestampsTz',
+                ], 'timestamps');
+            }
+        } while ($other[$k] != false);
+
+        $this->migration($name, $columns, $other_migrations);
+
+        $this->info('Migration for ' . $name . ' created successfully.');
 
     }
 }
