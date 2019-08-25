@@ -46,9 +46,20 @@ class IgniteMigrationCommand extends Command
      * @param  string $name
      * @return string
      */
-    protected function getPath($name)
+    protected function getMigrationsPath($name)
     {
         return base_path() . '/database/migrations/' . $this->getDatePrefix() . '_create_' . Str::plural(strtolower($name)) . '_table.php';
+    }
+
+    /**
+     * Get the full path to the views.
+     *
+     * @param  string $name
+     * @return string
+     */
+    protected function getViewsPath($name)
+    {
+        return base_path() . '/resources/views/' . Str::plural(strtolower($name)) . '/';
     }
 
     /**
@@ -171,7 +182,7 @@ class IgniteMigrationCommand extends Command
             $this->getStub('Migration')
         );
 
-        file_put_contents($this->getPath($name), $migrationTemplate);
+        file_put_contents($this->getMigrationsPath($name), $migrationTemplate);
     }
 
     /**
@@ -194,7 +205,7 @@ class IgniteMigrationCommand extends Command
             $this->getStub('ViewIndex')
         );
 
-        file_put_contents($this->getPath($name), $viewIndexTemplate);
+        file_put_contents($this->getViewsPath($name) . 'index.blade.php', $viewIndexTemplate);
     }
 
     /**
