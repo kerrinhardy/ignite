@@ -3,8 +3,8 @@
 @section('content')
     <header class="flex items-center mb-3 py-4">
         <div class="flex justify-between items-end w-full">
-            <h2 class="text-grey text-sm font-normal">{{}}</h2>
-            <a href="/projects/create" class="button">Add {{}}</a>
+            <h2 class="text-grey text-sm font-normal">{{modelNamePlural}}</h2>
+            <a href="/projects/create" class="button">Add {{modelName}}</a>
         </div>
     </header>
 

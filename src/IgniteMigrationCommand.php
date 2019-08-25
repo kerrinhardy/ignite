@@ -196,14 +196,20 @@ class IgniteMigrationCommand extends Command
         $viewIndexTemplate = str_replace(
             [
                 '{{modelName}}',
+                '{{modelNamePlural}}',
                 '{{modelNamePluralLowerCase}}'
             ],
             [
                 strtolower($name),
+                Str::plural($name),
                 Str::plural(strtolower($name))
             ],
             $this->getStub('ViewIndex')
         );
+
+        if (!File::exists(getViewsPath($name))) {
+            File::makeDirectory(getViewsPath($name), 0770, true);
+        }
 
         file_put_contents($this->getViewsPath($name) . 'index.blade.php', $viewIndexTemplate);
     }
