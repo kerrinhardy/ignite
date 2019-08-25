@@ -103,7 +103,7 @@ class IgniteModelCommand extends Command
             File::makeDirectory($directoryPath, 0770, true);
         }
 
-        file_put_contents($directoryPath . $name . 'Controller.php', $controllerApiTemplate);
+        file_put_contents($directoryPath . $name . 'ApiController.php', $controllerApiTemplate);
     }
 
     /**

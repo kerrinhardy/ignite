@@ -14,7 +14,7 @@ class {{modelName}}Controller extends Controller
      */
     public function index()
     {
-        ${{modelNamePluralLowerCase}} = {{modelName}}::all()->get();
+        ${{modelNamePluralLowerCase}} = {{modelName}}::all()->all();
 
         return view('{{modelNamePluralLowerCase}}.index', ['{{modelNamePluralLowerCase}}' => ${{modelNamePluralLowerCase}}]);
     }
