@@ -1,12 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <header class="flex items-center mb-3 py-4">
-        <div class="flex justify-between items-end w-full">
-            <h2 class="text-grey text-sm font-normal">{{modelNamePlural}}</h2>
-            <a href="/projects/create" class="button">Add {{modelName}}</a>
-        </div>
-    </header>
+    <div class="container mx-auto">
+        <div class="flex flex-wrap justify-center">
+            <div class="w-full max-w-sm">
+                <div class="flex flex-col break-words bg-white border border-2 rounded shadow-md">
+
+                    <div class="font-semibold bg-gray-200 text-gray-700 py-3 px-6 mb-0">
+                        {{modelNamePlural}}
+                    </div>
+
 
     <main class="lg:flex lg:flex-wrap -mx-3">
         @forelse(${{modelNamePluralLowerCase}} as ${{modelName}})
