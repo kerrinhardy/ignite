@@ -225,7 +225,8 @@ class IgniteMigrationCommand extends Command
             File::makeDirectory($directoryPath, 0770, true);
         }
 
-        file_put_contents($directoryPath . $name . 'show.blade.php', $viewShowTemplate);
+        file_put_contents($directoryPath . 'index.blade.php', $viewIndexTemplate);
+        file_put_contents($directoryPath . 'show.blade.php', $viewShowTemplate);
     }
 
     /**
