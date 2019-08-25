@@ -77,6 +77,36 @@ class IgniteModelCommand extends Command
     }
 
     /**
+     * Create a new API Controller from the stub and the name entered in the command.
+     *
+     * @var string
+     */
+    protected function controllerApi($name)
+    {
+        $controllerApiTemplate = str_replace(
+            [
+                '{{modelName}}',
+                '{{modelNamePluralLowerCase}}',
+                '{{modelNameSingularLowerCase}}'
+            ],
+            [
+                $name,
+                strtolower(Str::plural($name)),
+                strtolower($name)
+            ],
+            $this->getStub('ControllerApi')
+        );
+
+        $directoryPath = app_path("/Http/Controllers/API/");
+
+        if (!File::exists($directoryPath)) {
+            File::makeDirectory($directoryPath, 0770, true);
+        }
+
+        file_put_contents($directoryPath . $name . 'Controller.php', $controllerApiTemplate);
+    }
+
+    /**
      * Create a new Request from the stub and the name entered in the command.
      *
      * @var string
@@ -116,6 +146,9 @@ class IgniteModelCommand extends Command
         $name = $this->argument('name');
 
         $this->controller($name);
+        $this->info('Controller for ' . $name . ' created successfully.');
+
+        $this->controllerApi($name);
         $this->info('API Controller for ' . $name . ' created successfully.');
 
         $this->model($name);

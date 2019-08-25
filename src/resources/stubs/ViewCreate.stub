@@ -1,32 +1,24 @@
-<?php
+@extends('layout.layout')
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
+@section('content')
+    <h1>Add New {{modelName}}</h1>
+    <hr>
+     <form action="/{{modelNamePluralLowerCase}}" method="post">
+     @csrf_field()
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name"  name="name">
+      </div>
 
-class Create{{modelNamePlural}}Table extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('{{modelNamePluralLowerCase}}', function (Blueprint $table) {
-            $table->bigIncrements('id');{{columns}}
-            $table->timestamps();
-            $table->softDeletes();
-        });
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('{{modelNamePluralLowerCase}}');
-    }
-}
+      @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+      @endif
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+@endsection

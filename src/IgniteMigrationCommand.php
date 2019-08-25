@@ -207,13 +207,25 @@ class IgniteMigrationCommand extends Command
             $this->getStub('ViewIndex')
         );
 
+        $viewShowTemplate = str_replace(
+            [
+                '{{modelNameSingularLowerCase}}',
+                '{{modelNamePluralLowerCase}}'
+            ],
+            [
+                strtolower($name),
+                Str::plural(strtolower($name))
+            ],
+            $this->getStub('ShowIndex')
+        );
+
         $directoryPath = $this->getViewsPath($name);
 
         if (!File::exists($directoryPath)) {
             File::makeDirectory($directoryPath, 0770, true);
         }
 
-        file_put_contents($directoryPath . $name . 'index.blade.php', $viewIndexTemplate);
+        file_put_contents($directoryPath . $name . 'show.blade.php', $viewShowTemplate);
     }
 
     /**

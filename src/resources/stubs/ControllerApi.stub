@@ -14,20 +14,10 @@ class {{modelName}}Controller extends Controller
      */
     public function index()
     {
-        ${{modelNamePluralLowerCase}} = {{modelName}}::all()->get();
+        ${{modelNamePluralLowerCase}} = {{modelName}}::latest()->get();
 
-        return view('{{modelNamePluralLowerCase}}.index', ['{{modelNamePluralLowerCase}}' => ${{modelNamePluralLowerCase}}]);
+        return response()->json(${{modelNamePluralLowerCase}});
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-     public function create()
-     {
-        //
-     }
 
     /**
      * Store a newly created resource in storage.
@@ -52,19 +42,8 @@ class {{modelName}}Controller extends Controller
     {
         ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail(${{modelNameSingularLowerCase}});
 
-        return view('{{modelNamePluralLowerCase}}.show', ['{{modelNameSingularLowerCase}}' => ${{modelNameSingularLowerCase}}]);
+        return response()->json(${{modelNameSingularLowerCase}});
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\{{modelName}}  ${{modelNameSingularLowerCase}}
-     * @return \Illuminate\Http\Response
-     */
-     public function edit({{modelName}} ${{modelNameSingularLowerCase}})
-     {
-        //
-     }
 
     /**
      * Update the specified resource in storage.
