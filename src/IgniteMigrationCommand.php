@@ -207,11 +207,13 @@ class IgniteMigrationCommand extends Command
             $this->getStub('ViewIndex')
         );
 
-        if (!File::exists(getViewsPath($name))) {
-            File::makeDirectory(getViewsPath($name), 0770, true);
+        $directoryPath = getViewsPath($name);
+
+        if (!File::exists($directoryPath)) {
+            File::makeDirectory($directoryPath, 0770, true);
         }
 
-        file_put_contents($this->getViewsPath($name) . 'index.blade.php', $viewIndexTemplate);
+        file_put_contents($directoryPath . $name . 'index.blade.php', $viewIndexTemplate);
     }
 
     /**
