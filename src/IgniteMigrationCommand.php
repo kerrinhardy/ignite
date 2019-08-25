@@ -129,32 +129,32 @@ class IgniteMigrationCommand extends Command
 
         foreach ($columns as $column => $type) {
             if (in_array($type, $parameters_not_required)) {
-                $migrations .= '$table->' . $type . '(\'' . $column . '\');' . PHP_EOL;
+                $migrations .= PHP_EOL . '$table->' . $type . '(\'' . $column . '\');';
             }
             if (strpos($type, "char") === 0) {
                 $input = explode("-", $type);
-                $migrations .= '$table->' . $input[0] . '(\'' . $column . '\', ' . $input[1] . ');' . PHP_EOL;
+                $migrations .= PHP_EOL . '$table->' . $input[0] . '(\'' . $column . '\', ' . $input[1] . ');';
             }
             if (strpos($type, "string") === 0) {
                 $input = explode("-", $type);
-                $migrations .= '$table->' . $input[0] . '(\'' . $column . '\', ' . $input[1] . ');' . PHP_EOL;
+                $migrations .= PHP_EOL . '$table->' . $input[0] . '(\'' . $column . '\', ' . $input[1] . ');';
             }
             if (in_array($type, $parameters_digits) === 0) {
                 $input = explode("-", $type);
-                $migrations .= '$table->' . $input[0] . '(\'' . $column . '\', ' . $input[1] . ', ' . $input[2] . ');' . PHP_EOL;
+                $migrations .= PHP_EOL . '$table->' . $input[0] . '(\'' . $column . '\', ' . $input[1] . ', ' . $input[2] . ');';
             }
             if (strpos($type, "enum") === 0) {
                 $input = explode("-", $type);
-                $migrations .= '$table->' . $input[0] . '(\'' . $column . '\', [\'' . $input[1] . '\']);' . PHP_EOL;
+                $migrations .= PHP_EOL . '$table->' . $input[0] . '(\'' . $column . '\', [\'' . $input[1] . '\']);';
             }
             if (strpos($type, "set") === 0) {
                 $input = explode("-", $type);
-                $migrations .= '$table->' . $input[0] . '(\'' . $column . '\', [\'' . $input[1] . '\']);' . PHP_EOL;
+                $migrations .= PHP_EOL . '$table->' . $input[0] . '(\'' . $column . '\', [\'' . $input[1] . '\']);';
             }
         }
 
         foreach ($other_migrations as $key => $value) {
-            $migrations .= '$table->' . $value . '();' . PHP_EOL;
+            $migrations .= PHP_EOL . '$table->' . $value . '();';
         }
 
         $migrationTemplate = str_replace(
