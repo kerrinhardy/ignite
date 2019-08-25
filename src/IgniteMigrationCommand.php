@@ -207,7 +207,7 @@ class IgniteMigrationCommand extends Command
             $this->getStub('ViewIndex')
         );
 
-        $directoryPath = getViewsPath($name);
+        $directoryPath = $this->getViewsPath($name);
 
         if (!File::exists($directoryPath)) {
             File::makeDirectory($directoryPath, 0770, true);
