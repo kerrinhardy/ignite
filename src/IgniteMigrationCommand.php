@@ -185,13 +185,11 @@ class IgniteMigrationCommand extends Command
         $viewIndexTemplate = str_replace(
             [
                 '{{modelName}}',
-                '{{modelNamePluralLowerCase}}',
-                '{{fields}}'
+                '{{modelNamePluralLowerCase}}'
             ],
             [
                 strtolower($name),
-                Str::plural(strtolower($name)),
-                ['name', 'brand']
+                Str::plural(strtolower($name))
             ],
             $this->getStub('ViewIndex')
         );
