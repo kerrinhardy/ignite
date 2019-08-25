@@ -175,6 +175,31 @@ class IgniteMigrationCommand extends Command
     }
 
     /**
+     * Create a new Migration from the stub and the names entered in the command.
+     *
+     * @var string
+     * @var array
+     */
+    protected function views($name, $columns)
+    {
+        $viewIndexTemplate = str_replace(
+            [
+                '{{modelName}}',
+                '{{modelNamePluralLowerCase}}',
+                '{{fields}}'
+            ],
+            [
+                strtolower($name),
+                Str::plural(strtolower($name)),
+                ['name', 'brand']
+            ],
+            $this->getStub('ViewIndex')
+        );
+
+        file_put_contents($this->getPath($name), $viewIndexTemplate);
+    }
+
+    /**
      * Execute the console command.
      *
      * @return mixed
@@ -301,8 +326,9 @@ class IgniteMigrationCommand extends Command
         } while ($other[$k] != false);
 
         $this->migration($name, $columns, $other_migrations);
-
         $this->info('Migration for ' . $name . ' created successfully.');
 
+        $this->views($name, $columns);
+        $this->info('CRUD views for ' . $name . ' created successfully.');
     }
 }
