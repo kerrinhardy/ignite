@@ -125,6 +125,13 @@ class IgniteModelCommand extends Command
         $this->info('Request for ' . $name . ' created successfully.');
 
         File::append(base_path('routes/api.php'),
-            'Route::resource(\'' . strtolower(Str::plural($name)) . "', '{$name}Controller');");
+            PHP_EOL . 'Route::resource(\'' . strtolower(Str::plural($name)) . "', '{$name}Controller');");
+
+        $this->info('Added to API routes file.');
+
+        File::append(base_path('routes/web.php'),
+            PHP_EOL . 'Route::resource(\'' . strtolower(Str::plural($name)) . "', '{$name}Controller');");
+
+        $this->info('Added to Web routes file.');
     }
 }
