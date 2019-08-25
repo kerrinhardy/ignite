@@ -216,7 +216,7 @@ class IgniteMigrationCommand extends Command
                 strtolower($name),
                 Str::plural(strtolower($name))
             ],
-            $this->getStub('ShowIndex')
+            $this->getStub('ViewShow')
         );
 
         $directoryPath = $this->getViewsPath($name);
