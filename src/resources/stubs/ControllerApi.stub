@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\{{modelName}}Request;
 use App\{{modelName}};
 
-class {{modelName}}Controller extends Controller
+class {{modelName}}ApiController extends Controller
 {
     /**
      * Display a listing of the resource.

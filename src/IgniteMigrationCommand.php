@@ -211,11 +211,13 @@ class IgniteMigrationCommand extends Command
             [
                 '{{modelNameSingularLowerCase}}',
                 '{{modelName}}',
+                '{{modelNamePlural}}',
                 '{{modelNamePluralLowerCase}}'
             ],
             [
                 strtolower($name),
                 $name,
+                Str::plural($name),
                 Str::plural(strtolower($name))
             ],
             $this->getStub('ViewShow')
