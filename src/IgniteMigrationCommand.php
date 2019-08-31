@@ -210,10 +210,12 @@ class IgniteMigrationCommand extends Command
         $viewShowTemplate = str_replace(
             [
                 '{{modelNameSingularLowerCase}}',
+                '{{modelNamePlural}}',
                 '{{modelNamePluralLowerCase}}'
             ],
             [
                 strtolower($name),
+                Str::plural($name),
                 Str::plural(strtolower($name))
             ],
             $this->getStub('ViewShow')
