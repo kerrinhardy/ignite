@@ -6,14 +6,14 @@
             <div class="w-full max-w-sm">
                 <div class="flex flex-col break-words bg-white border border-2 rounded shadow-md">
                     <div class="font-semibold bg-gray-200 text-gray-700 py-3 px-4 mb-0">
-                        <h2 class="text-grey font-normal">{{&&modelNamePlural&&}}</h2>
-                        <a class=" text-sm" href="/{{&&modelNamePluralLowerCase&&}}/create" class="button">Add {{&&modelName&&}}</a>
+                        <h2 class="text-grey font-normal">{{{{modelNamePlural}}}}</h2>
+                        <a class=" text-sm" href="url({{{{modelNamePluralLowerCase}}}}/create)" class="button">Add {{{{modelName}}}}</a>
                     </div>
                     <div class="p-4">
-                        @forelse(${{&&modelNamePluralLowerCase&&}} as ${{&&modelName&&}})
+                        @forelse(${{{{modelNamePluralLowerCase}}}} as ${{{{modelName}}}})
                             List here
                         @empty
-                            No {{&&modelNamePluralLowerCase&&}} yet.
+                            No {{{{modelNamePluralLowerCase}}s}} yet.
                         @endforelse
                     </div>
                 </div>
