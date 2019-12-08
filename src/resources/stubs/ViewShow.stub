@@ -11,7 +11,9 @@
                         </div>
                     </div>
                     <div class="pt-4">
-                        {{ $&&modelNameSingularLowerCase&& }}
+                        <ul>
+                        &&modelFields&&
+                        </ul>
                     </div>
                 </div>
             </div>

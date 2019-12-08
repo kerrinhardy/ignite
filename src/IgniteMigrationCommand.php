@@ -207,18 +207,24 @@ class IgniteMigrationCommand extends Command
             $this->getStub('ViewIndex')
         );
 
+        $modelFields = "";
+
+        foreach($columns as $column) {
+            $modelFields .= '<li>{{ $column }}</li>';
+        }
+
         $viewShowTemplate = str_replace(
             [
                 '&&modelNameSingularLowerCase&&',
                 '&&modelName&&',
                 '&&modelNamePlural&&',
-                '&&modelNamePluralLowerCase&&'
+                '&&modelFields&&'
             ],
             [
                 strtolower($name),
                 $name,
                 Str::plural($name),
-                Str::plural(strtolower($name))
+                $modelFields
             ],
             $this->getStub('ViewShow')
         );
