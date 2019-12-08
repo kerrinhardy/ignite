@@ -209,7 +209,7 @@ class IgniteMigrationCommand extends Command
 
         $modelFields = "";
 
-        foreach($columns as $column) {
+        foreach($columns as $column => $type) {
             $modelFields .= '<li>' . $column . '</li>';
         }
 
