@@ -209,10 +209,10 @@ class IgniteMigrationCommand extends Command
 
         $viewShowTemplate = str_replace(
             [
-                '{{modelNameSingularLowerCase}}',
-                '{{modelName}}',
-                '{{modelNamePlural}}',
-                '{{modelNamePluralLowerCase}}'
+                '&&modelNameSingularLowerCase&&',
+                '&&modelName&&',
+                '&&modelNamePlural&&',
+                '&&modelNamePluralLowerCase&&'
             ],
             [
                 strtolower($name),
