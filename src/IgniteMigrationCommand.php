@@ -210,7 +210,7 @@ class IgniteMigrationCommand extends Command
         $modelFields = "";
 
         foreach($columns as $column) {
-            $modelFields .= '<li>{{ $column }}</li>';
+            $modelFields .= '<li>' . $column . '</li>';
         }
 
         $viewShowTemplate = str_replace(
