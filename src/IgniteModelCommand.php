@@ -123,7 +123,27 @@ class IgniteModelCommand extends Command
             mkdir($path, 0770, true);
         }
 
-        file_put_contents(app_path("/Http/Requests/{$name}Request.php"), $requestTemplate);
+        file_put_contents(app_path("/Http/Requests/{$name}FormRequest.php"), $requestTemplate);
+    }
+
+    /**
+     * Create a new Policy from the stub and the name entered in the command.
+     *
+     * @var string
+     */
+    protected function policy($name)
+    {
+        $policyTemplate = str_replace(
+            ['{{modelName}}'],
+            [$name],
+            $this->getStub('Policy')
+        );
+
+        if (!file_exists($path = app_path('/Policies'))) {
+            mkdir($path, 0770, true);
+        }
+
+        file_put_contents(app_path("/Policies/{$name}Policy.php"), $policyTemplate);
     }
 
     /**
@@ -156,6 +176,9 @@ class IgniteModelCommand extends Command
 
         $this->request($name);
         $this->info('Request for ' . $name . ' created successfully.');
+
+        $this->policy($name);
+        $this->info('Policy for ' . $name . ' created successfully.');
 
         File::append(base_path('routes/api.php'),
             PHP_EOL . 'Route::resource(\'' . strtolower(Str::plural($name)) . "', '{$name}Controller');");

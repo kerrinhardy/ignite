@@ -6,5 +6,33 @@
 
     class {{modelName}} extends Model
     {
-        protected $guarded = ['id'];
+        /**
+        * The attributes that are mass assignable.
+        *
+        * @var array
+        */
+        protected $fillable = [
+
+        ];
+
+        /**
+        * The attributes that should be mutated to dates.
+        *
+        * @var array
+        */
+        protected $dates = [
+            'date_of_birth',
+            'expiry_date',
+            'deleted_at'
+        ];
+
+        /**
+        *  The path to the project.
+        *
+        * @return string
+        */
+        public function path()
+        {
+            return "/{$this->id}";
+        }
     }
