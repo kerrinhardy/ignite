@@ -21,13 +21,11 @@
         * @var array
         */
         protected $dates = [
-            'date_of_birth',
-            'expiry_date',
             'deleted_at'
         ];
 
         /**
-        *  The path to the project.
+        *  The path to the {{modelNameSingularLowerCase}}.
         *
         * @return string
         */

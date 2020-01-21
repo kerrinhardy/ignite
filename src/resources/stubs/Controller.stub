@@ -14,7 +14,7 @@ class {{modelName}}Controller extends Controller
      */
     public function index()
     {
-        ${{modelNamePluralLowerCase}} = {{modelName}}::all()->all();
+        ${{modelNamePluralLowerCase}} = {{modelName}}::all();
 
         return view('{{modelNamePluralLowerCase}}.index', ['{{modelNamePluralLowerCase}}' => ${{modelNamePluralLowerCase}}]);
     }
@@ -39,7 +39,7 @@ class {{modelName}}Controller extends Controller
     {
         ${{modelNameSingularLowerCase}} = {{modelName}}::create($request->all());
 
-        return response()->json(${{modelNameSingularLowerCase}}, 201);
+        return redirect()->route('{{modelNamePluralLowerCase}}.index');
     }
 
     /**
@@ -79,7 +79,7 @@ class {{modelName}}Controller extends Controller
 
         ${{modelNameSingularLowerCase}}->update($request->all());
 
-        return response()->json(${{modelNameSingularLowerCase}}, 200);
+        return redirect()->route('{{modelNamePluralLowerCase}}.show', [${{modelNameSingularLowerCase}}]);
     }
 
     /**

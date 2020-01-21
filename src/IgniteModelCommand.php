@@ -38,8 +38,14 @@ class IgniteModelCommand extends Command
     protected function model($name)
     {
         $modelTemplate = str_replace(
-            ['{{modelName}}'],
-            [$name],
+            [
+                '{{modelName}}',
+                '{{modelNameSingularLowerCase}}'
+            ],
+            [
+                $name,
+                strtolower($name)
+            ],
             $this->getStub('Model')
         );
 
@@ -134,8 +140,16 @@ class IgniteModelCommand extends Command
     protected function policy($name)
     {
         $policyTemplate = str_replace(
-            ['{{modelName}}'],
-            [$name],
+            [
+                '{{modelName}}',
+                '{{modelNamePluralLowerCase}}',
+                '{{modelNameSingularLowerCase}}'
+            ],
+            [
+                $name,
+                strtolower(Str::plural($name)),
+                strtolower($name)
+            ],
             $this->getStub('Policy')
         );
 
