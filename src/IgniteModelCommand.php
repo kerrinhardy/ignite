@@ -182,8 +182,8 @@ class IgniteModelCommand extends Command
         $this->controller($name);
         $this->info('Controller for ' . $name . ' created successfully.');
 
-        $this->controllerApi($name);
-        $this->info('API Controller for ' . $name . ' created successfully.');
+//        $this->controllerApi($name);
+//        $this->info('API Controller for ' . $name . ' created successfully.');
 
         $this->model($name);
         $this->info('Model for ' . $name . ' created successfully.');
@@ -194,10 +194,10 @@ class IgniteModelCommand extends Command
         $this->policy($name);
         $this->info('Policy for ' . $name . ' created successfully.');
 
-        File::append(base_path('routes/api.php'),
-            PHP_EOL . 'Route::resource(\'' . strtolower(Str::plural($name)) . "', '{$name}Controller');");
-
-        $this->info('Added to API routes file.');
+//        File::append(base_path('routes/api.php'),
+//            PHP_EOL . 'Route::resource(\'' . strtolower(Str::plural($name)) . "', '{$name}Controller');");
+//
+//        $this->info('Added to API routes file.');
 
         File::append(base_path('routes/web.php'),
             PHP_EOL . 'Route::resource(\'' . strtolower(Str::plural($name)) . "', '{$name}Controller');");

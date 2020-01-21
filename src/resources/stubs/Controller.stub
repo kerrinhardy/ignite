@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\{{modelName}}Request;
+use App\Http\Requests\{{modelName}}FormRequest;
 use App\{{modelName}};
 
 class {{modelName}}Controller extends Controller
@@ -32,10 +32,10 @@ class {{modelName}}Controller extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  {{modelName}}Request  $request
+     * @param  {{modelName}}FormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store({{modelName}}Request $request)
+    public function store({{modelName}}FormRequest $request)
     {
         ${{modelNameSingularLowerCase}} = {{modelName}}::create($request->all());
 
@@ -69,11 +69,11 @@ class {{modelName}}Controller extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  {{modelName}}Request  $request
+     * @param  {{modelName}}FormRequest  $request
      * @param  \App\{{modelName}}  ${{modelNameSingularLowerCase}}
      * @return \Illuminate\Http\Response
      */
-    public function update({{modelName}}Request $request, {{modelName}} ${{modelNameSingularLowerCase}})
+    public function update({{modelName}}FormRequest $request, {{modelName}} ${{modelNameSingularLowerCase}})
     {
         ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail(${{modelNameSingularLowerCase}});
 
