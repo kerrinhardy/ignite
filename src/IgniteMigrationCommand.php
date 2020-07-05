@@ -52,6 +52,17 @@ class IgniteMigrationCommand extends Command
     }
 
     /**
+     * Get the full path to the factory.
+     *
+     * @param  string $name
+     * @return string
+     */
+    protected function getFactoryPath($name)
+    {
+        return base_path() . '/database/factories/' . Str::plural(strtolower($name)) . 'Factory.php';
+    }
+
+    /**
      * Get the full path to the views.
      *
      * @param  string $name
@@ -186,7 +197,7 @@ class IgniteMigrationCommand extends Command
     }
 
     /**
-     * Create a new Migration from the stub and the names entered in the command.
+     * Create new views from stubs and the names entered in the command.
      *
      * @var string
      * @var array
@@ -207,10 +218,10 @@ class IgniteMigrationCommand extends Command
             $this->getStub('ViewIndex')
         );
 
-        $modelFields = "";
+        $modelFields = [];
 
         foreach($columns as $column => $type) {
-            $modelFields .= '<li>' . $column . '</li>';
+            $modelFields .= $column;
         }
 
         $viewShowTemplate = str_replace(
@@ -228,6 +239,40 @@ class IgniteMigrationCommand extends Command
             ],
             $this->getStub('ViewShow')
         );
+
+        $directoryPath = $this->getViewsPath($name);
+
+        if (!File::exists($directoryPath)) {
+            File::makeDirectory($directoryPath, 0770, true);
+        }
+
+        file_put_contents($directoryPath . 'index.blade.php', $viewIndexTemplate);
+        file_put_contents($directoryPath . 'show.blade.php', $viewShowTemplate);
+    }
+
+    /**
+     * Create a new Factory from the stub and the names entered in the command.
+     *
+     * @var string
+     * @var array
+     */
+    protected function factory($name, $columns)
+    {
+        $factoryTemplate = str_replace(
+            [
+                '{{modelName}}'
+            ],
+            [
+                $name
+            ],
+            $this->getStub('Factory')
+        );
+
+        $modelFields = [];
+
+        foreach($columns as $column => $type) {
+            $modelFields .= $column;
+        }
 
         $directoryPath = $this->getViewsPath($name);
 
@@ -367,6 +412,9 @@ class IgniteMigrationCommand extends Command
 
         $this->migration($name, $columns, $other_migrations);
         $this->info('Migration for ' . $name . ' created successfully.');
+
+        $this->factory($name);
+        $this->info('Factory for ' . $name . ' created successfully.');
 
         $this->views($name, $columns);
         $this->info('CRUD views for ' . $name . ' created successfully.');
