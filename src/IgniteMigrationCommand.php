@@ -43,7 +43,7 @@ class IgniteMigrationCommand extends Command
     /**
      * Get the full path to the migration.
      *
-     * @param  string $name
+     * @param string $name
      * @return string
      */
     protected function getMigrationsPath($name)
@@ -54,7 +54,7 @@ class IgniteMigrationCommand extends Command
     /**
      * Get the full path to the factory.
      *
-     * @param  string $name
+     * @param string $name
      * @return string
      */
     protected function getFactoryPath($name)
@@ -65,7 +65,7 @@ class IgniteMigrationCommand extends Command
     /**
      * Get the full path to the views.
      *
-     * @param  string $name
+     * @param string $name
      * @return string
      */
     protected function getViewsPath($name)
@@ -220,7 +220,7 @@ class IgniteMigrationCommand extends Command
 
         $modelFields = [];
 
-        foreach($columns as $column => $type) {
+        foreach ($columns as $column => $type) {
             $modelFields .= $column;
         }
 
@@ -256,32 +256,27 @@ class IgniteMigrationCommand extends Command
      * @var string
      * @var array
      */
-    protected function factory($name, $columns)
+    protected function factory($name, $factory)
     {
         $factoryTemplate = str_replace(
             [
-                '{{modelName}}'
+                '{{modelName}}',
+                '{{factory}}'
             ],
             [
-                $name
+                $name,
+                $factory
             ],
             $this->getStub('Factory')
         );
 
-        $modelFields = [];
-
-        foreach($columns as $column => $type) {
-            $modelFields .= $column;
-        }
-
-        $directoryPath = $this->getViewsPath($name);
+        $directoryPath = $this->getFactoryPath($name);
 
         if (!File::exists($directoryPath)) {
             File::makeDirectory($directoryPath, 0770, true);
         }
 
-        file_put_contents($directoryPath . 'index.blade.php', $viewIndexTemplate);
-        file_put_contents($directoryPath . 'show.blade.php', $viewShowTemplate);
+        file_put_contents($directoryPath, $factoryTemplate);
     }
 
     /**
