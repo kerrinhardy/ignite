@@ -71,6 +71,8 @@ class IgniteModelCommand extends Command
      */
     protected function factory($name)
     {
+        $this->info('Name is ' . $name);
+
         $factoryTemplate = str_replace(
             [
                 '{{modelName}}'
@@ -82,6 +84,8 @@ class IgniteModelCommand extends Command
         );
 
         $directoryPath = $this->getFactoryPath($name);
+
+        $this->info('Directory path is ' . $directoryPath);
 
         if (!File::exists($directoryPath)) {
             File::makeDirectory($directoryPath, 0770, true);
