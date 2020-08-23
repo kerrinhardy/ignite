@@ -60,7 +60,7 @@ class IgniteModelCommand extends Command
      */
     protected function getFactoryPath($name)
     {
-        return base_path() . '/database/factories/' . Str::plural(strtolower($name)) . 'Factory.php';
+        return base_path() . '/database/factories/' . $name . 'Factory.php';
     }
 
     /**
