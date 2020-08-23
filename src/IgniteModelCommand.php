@@ -53,6 +53,44 @@ class IgniteModelCommand extends Command
     }
 
     /**
+     * Get the full path to the factory.
+     *
+     * @param string $name
+     * @return string
+     */
+    protected function getFactoryPath($name)
+    {
+        return base_path() . '/database/factories/' . Str::plural(strtolower($name)) . 'Factory.php';
+    }
+
+    /**
+     * Create a new Factory from the stub and the names entered in the command.
+     *
+     * @var string
+     * @var array
+     */
+    protected function factory($name)
+    {
+        $factoryTemplate = str_replace(
+            [
+                '{{modelName}}'
+            ],
+            [
+                $name
+            ],
+            $this->getStub('Factory')
+        );
+
+        $directoryPath = $this->getFactoryPath($name);
+
+        if (!File::exists($directoryPath)) {
+            File::makeDirectory($directoryPath, 0770, true);
+        }
+
+        file_put_contents($directoryPath, $factoryTemplate);
+    }
+
+    /**
      * Create a new Controller from the stub and the name entered in the command.
      *
      * @var string
@@ -193,6 +231,9 @@ class IgniteModelCommand extends Command
 
         $this->policy($name);
         $this->info('Policy for ' . $name . ' created successfully.');
+
+        $this->factory($name);
+        $this->info('Factory for ' . $name . ' created successfully.');
 
 //        File::append(base_path('routes/api.php'),
 //            PHP_EOL . 'Route::resource(\'' . strtolower(Str::plural($name)) . "', '{$name}Controller');");

@@ -52,17 +52,6 @@ class IgniteMigrationCommand extends Command
     }
 
     /**
-     * Get the full path to the factory.
-     *
-     * @param string $name
-     * @return string
-     */
-    protected function getFactoryPath($name)
-    {
-        return base_path() . '/database/factories/' . Str::plural(strtolower($name)) . 'Factory.php';
-    }
-
-    /**
      * Get the full path to the views.
      *
      * @param string $name
@@ -250,34 +239,7 @@ class IgniteMigrationCommand extends Command
         file_put_contents($directoryPath . 'show.blade.php', $viewShowTemplate);
     }
 
-    /**
-     * Create a new Factory from the stub and the names entered in the command.
-     *
-     * @var string
-     * @var array
-     */
-    protected function factory($name, $factory)
-    {
-        $factoryTemplate = str_replace(
-            [
-                '{{modelName}}',
-                '{{factory}}'
-            ],
-            [
-                $name,
-                $factory
-            ],
-            $this->getStub('Factory')
-        );
 
-        $directoryPath = $this->getFactoryPath($name);
-
-        if (!File::exists($directoryPath)) {
-            File::makeDirectory($directoryPath, 0770, true);
-        }
-
-        file_put_contents($directoryPath, $factoryTemplate);
-    }
 
     /**
      * Execute the console command.
@@ -407,9 +369,6 @@ class IgniteMigrationCommand extends Command
 
         $this->migration($name, $columns, $other_migrations);
         $this->info('Migration for ' . $name . ' created successfully.');
-
-        $this->factory($name);
-        $this->info('Factory for ' . $name . ' created successfully.');
 
         $this->views($name, $columns);
         $this->info('CRUD views for ' . $name . ' created successfully.');
