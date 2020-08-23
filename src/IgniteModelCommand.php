@@ -73,25 +73,25 @@ class IgniteModelCommand extends Command
     {
         $this->info('Name is ' . $name);
 
-        $factoryTemplate = str_replace(
-            [
-                '{{modelName}}'
-            ],
-            [
-                $name
-            ],
-            $this->getStub('Factory')
-        );
+//        $factoryTemplate = str_replace(
+//            [
+//                '{{modelName}}'
+//            ],
+//            [
+//                $name
+//            ],
+//            $this->getStub('Factory')
+//        );
 
         $directoryPath = $this->getFactoryPath($name);
 
         $this->info('Directory path is ' . $directoryPath);
 
-        if (!File::exists($directoryPath)) {
-            File::makeDirectory($directoryPath, 0770, true);
-        }
-
-        file_put_contents($directoryPath, $factoryTemplate);
+//        if (!File::exists($directoryPath)) {
+//            File::makeDirectory($directoryPath, 0770, true);
+//        }
+//
+//        file_put_contents($directoryPath, $factoryTemplate);
     }
 
     /**
