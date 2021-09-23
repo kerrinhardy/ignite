@@ -194,7 +194,7 @@ class IgniteModelCommand extends Command
         $observerTemplate = str_replace(
             ['{{modelName}}'],
             [$name],
-            $this->getStub('FormRequestUpdate')
+            $this->getStub('Observer')
         );
 
         if (!file_exists($path = app_path('/Observers'))) {
