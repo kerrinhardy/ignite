@@ -42,7 +42,7 @@ class {{modelName}}Controller extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  {{modelName}}FormRequest  $request
+     * @param  {{modelName}}CreateFormRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store({{modelName}}CreateFormRequest $request)
@@ -83,11 +83,11 @@ class {{modelName}}Controller extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  {{modelName}}FormRequest  $request
+     * @param  {{modelName}}UpdateFormRequest  $request
      * @param  \App\{{modelName}}  ${{modelNameSingularLowerCase}}
      * @return \Illuminate\Http\Response
      */
-    public function update({{modelName}}FormRequest $request, {{modelName}} ${{modelNameSingularLowerCase}})
+    public function update({{modelName}}UpdateFormRequest $request, {{modelName}} ${{modelNameSingularLowerCase}})
     {
         $this->authorize('update', {{modelName}}::class);
 
