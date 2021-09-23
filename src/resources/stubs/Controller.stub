@@ -8,14 +8,13 @@ use App\Models\{{modelName}};
 
 
 /**
- * Class {{modelName}}Controller.
+ * Class {{modelName}}Controller
  */
 class {{modelName}}Controller extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
@@ -30,12 +29,11 @@ class {{modelName}}Controller extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
      public function create()
      {
         $this->authorize('create', {{modelName}}::class);
-
 
         return view('{{modelNamePluralLowerCase}}.create', ['{{modelNameSingularLowerCase}}' => new {{modelName}}() ]);
      }
@@ -44,7 +42,8 @@ class {{modelName}}Controller extends Controller
      * Store a newly created resource in storage.
      *
      * @param  {{modelName}}CreateFormRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store({{modelName}}CreateFormRequest $request)
     {
@@ -60,6 +59,7 @@ class {{modelName}}Controller extends Controller
      *
      * @param  {{modelName}}  ${{modelNameSingularLowerCase}}
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show({{modelName}} ${{modelNameSingularLowerCase}})
     {
@@ -72,7 +72,8 @@ class {{modelName}}Controller extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  {{modelName}}  ${{modelNameSingularLowerCase}}
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
      public function edit({{modelName}} ${{modelNameSingularLowerCase}})
      {
@@ -86,7 +87,8 @@ class {{modelName}}Controller extends Controller
      *
      * @param  {{modelName}}UpdateFormRequest  $request
      * @param  {{modelName}}  ${{modelNameSingularLowerCase}}
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update({{modelName}}UpdateFormRequest $request, {{modelName}} ${{modelNameSingularLowerCase}})
     {
@@ -101,7 +103,8 @@ class {{modelName}}Controller extends Controller
      * Remove the specified resource from storage.
      *
      * @param  {{modelName}}  ${{modelNameSingularLowerCase}}
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy({{modelName}} ${{modelNameSingularLowerCase}})
     {

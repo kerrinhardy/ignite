@@ -1,0 +1,72 @@
+<?php
+
+namespace App\Observers;
+
+use App\Models\Activity;
+use App\Models\{{modelName}};
+
+class {{modelName}}Observer
+{
+    protected function logActivity($type, ${{modelNameSingularLowerCase}})
+    {
+        Activity::create([
+            'description' => $type,
+            '{{modelNameSingularLowerCase}}_id' => ${{modelNameSingularLowerCase}}->id
+        ]);
+    }
+
+    /**
+     * Handle the {{modelName}} "created" event.
+     *
+     * @param  \App\Models\{{modelName}}  ${{modelNameSingularLowerCase}}
+     * @return void
+     */
+    public function created({{modelName}} ${{modelNameSingularLowerCase}})
+    {
+        $this->logActivity('created', ${{modelNameSingularLowerCase}});
+    }
+
+    /**
+     * Handle the {{modelName}} "updated" event.
+     *
+     * @param  \App\Models\{{modelName}}  ${{modelNameSingularLowerCase}}
+     * @return void
+     */
+    public function updated({{modelName}} ${{modelNameSingularLowerCase}})
+    {
+        $this->logActivity('updated', ${{modelNameSingularLowerCase}});
+    }
+
+    /**
+     * Handle the {{modelName}} "deleted" event.
+     *
+     * @param  \App\Models\{{modelName}}  ${{modelNameSingularLowerCase}}
+     * @return void
+     */
+    public function deleted({{modelName}} ${{modelNameSingularLowerCase}})
+    {
+        $this->logActivity('deleted', ${{modelNameSingularLowerCase}});
+    }
+
+    /**
+     * Handle the {{modelName}} "restored" event.
+     *
+     * @param  \App\Models\{{modelName}}  ${{modelNameSingularLowerCase}}
+     * @return void
+     */
+    public function restored({{modelName}} ${{modelNameSingularLowerCase}})
+    {
+        $this->logActivity('restored', ${{modelNameSingularLowerCase}});
+    }
+
+    /**
+     * Handle the {{modelName}} "force deleted" event.
+     *
+     * @param  \App\Models\{{modelName}}  ${{modelNameSingularLowerCase}}
+     * @return void
+     */
+    public function forceDeleted({{modelName}} ${{modelNameSingularLowerCase}})
+    {
+        $this->logActivity('force-deleted', ${{modelNameSingularLowerCase}});
+    }
+}

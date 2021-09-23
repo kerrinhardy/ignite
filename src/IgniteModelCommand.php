@@ -185,6 +185,26 @@ class IgniteModelCommand extends Command
     }
 
     /**
+     * Create an Observer from the stub and the name entered in the command.
+     *
+     * @var string
+     */
+    protected function observer($name)
+    {
+        $observerTemplate = str_replace(
+            ['{{modelName}}'],
+            [$name],
+            $this->getStub('FormRequestUpdate')
+        );
+
+        if (!file_exists($path = app_path('/Observers'))) {
+            mkdir($path, 0770, true);
+        }
+
+        file_put_contents(app_path("/Observers/{$name}Observer.php"), $observerTemplate);
+    }
+
+    /**
      * Create a new Policy from the stub and the name entered in the command.
      *
      * @var string
@@ -336,6 +356,9 @@ class IgniteModelCommand extends Command
 
         $this->policy($name);
         $this->info('Policy for ' . $name . ' created successfully.');
+
+        $this->observer($name);
+        $this->info('Observer for ' . $name . ' created successfully.');
 
         $this->permissionsSeeder($name);
         $this->info('Permissions Seeder for ' . $name . ' created successfully.');
