@@ -35,41 +35,5 @@ class {{modelName}}PermissionsSeeder extends Seeder
             'label' => 'Delete {{modelNamePlural}}',
             'description' => 'This permission allows deletion of existing {{modelNamePluralLowerCase}}.'
         ]);
-
-
-
-
-
-        DB::table('permissions')->insert([
-            'name' => '{{modelNamePluralLowerCase}}-view',
-            'label' => 'View {{modelNamePlural}}',
-            'description' => 'This permission provides read-only view of {{modelNamePluralLowerCase}}.',
-            'created_at' => $now,
-            'updated_at' => $now,
-        ]);
-
-        DB::table('permissions')->insert([
-            'name' => '{{modelNamePluralLowerCase}}-create',
-            'label' => 'Create {{modelNamePlural}}',
-            'description' => 'This permission allows creation of new {{modelNamePluralLowerCase}}.',
-            'created_at' => $now,
-            'updated_at' => $now,
-        ]);
-
-        DB::table('permissions')->insert([
-            'name' => '{{modelNamePluralLowerCase}}-update',
-            'label' => 'Update {{modelNamePlural}}',
-            'description' => 'This permission allows updating of existing {{modelNamePluralLowerCase}}.',
-            'created_at' => $now,
-            'updated_at' => $now,
-        ]);
-
-        DB::table('permissions')->insert([
-            'name' => '{{modelNamePluralLowerCase}}-delete',
-            'label' => 'Delete {{modelNamePlural}}',
-            'description' => 'This permission allows deletion of existing {{modelNamePluralLowerCase}}.',
-            'created_at' => $now,
-            'updated_at' => $now,
-        ]);
     }
 }

@@ -161,7 +161,7 @@ class IgniteModelCommand extends Command
             mkdir($path, 0770, true);
         }
 
-        file_put_contents(app_path("/Http/Requests/{$name}FormRequest.php"), $formRequestCreateTemplate);
+        file_put_contents(app_path("/Http/Requests/{$name}CreateFormRequest.php"), $formRequestCreateTemplate);
     }
 
     /**
@@ -181,7 +181,7 @@ class IgniteModelCommand extends Command
             mkdir($path, 0770, true);
         }
 
-        file_put_contents(app_path("/Http/Requests/{$name}FormRequest.php"), $formRequestUpdateTemplate);
+        file_put_contents(app_path("/Http/Requests/{$name}UpdateFormRequest.php"), $formRequestUpdateTemplate);
     }
 
     /**
