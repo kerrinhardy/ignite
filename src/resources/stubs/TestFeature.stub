@@ -1,0 +1,395 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\Permission;
+use App\Role;
+use App\User;
+use App\Component;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
+
+/**
+ * @see \App\Http\Controllers\ComponentController
+ */
+class ManageComponentsTest extends TestCase
+{
+    use WithFaker, RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('db:seed');
+
+        $role_view = factory(Role::class)->create();
+        $role_view->givePermissionTo(Permission::where('name', '=', 'components-view')->first());
+        $this->user_view = factory(User::class)->create();
+        $this->user_view->assignRole($role_view);
+
+        $role_create = factory(Role::class)->create();
+        $role_create->givePermissionTo(Permission::where('name', '=', 'components-create')->first());
+        $this->user_create = factory(User::class)->create();
+        $this->user_create->assignRole($role_create);
+
+        $role_update = factory(Role::class)->create();
+        $role_update->givePermissionTo(Permission::where('name', '=', 'components-update')->first());
+        $this->user_update = factory(User::class)->create();
+        $this->user_update->assignRole($role_update);
+
+        $role_delete = factory(Role::class)->create();
+        $role_delete->givePermissionTo(Permission::where('name', '=', 'components-delete')->first());
+        $this->user_delete = factory(User::class)->create();
+        $this->user_delete->assignRole($role_delete);
+
+        $this->user_authenticated = factory(User::class)->create();
+    }
+
+    /**
+     * @test
+     */
+    public function an_authorised_user_can_view_the_components_page()
+    {
+        $response = $this->actingAs($this->user_view)->get(route('components.index'));
+
+        $response->assertOk();
+        $response->assertViewIs('components.index');
+        $response->assertViewHas('components');
+    }
+
+    /**
+     * @test
+     */
+    public function an_authorised_user_can_view_a_component_page()
+    {
+        $component = factory(Component::class)->create();
+
+        $response = $this->actingAs($this->user_view)->get(route('components.show', [$component]));
+
+        $response->assertOk();
+        $response->assertViewIs('components.show');
+        $response->assertViewHas('component');
+    }
+
+    /**
+     * @test
+     */
+    public function an_authorised_user_can_view_the_component_create_page()
+    {
+        $response = $this->actingAs($this->user_create)->get(route('components.create'));
+
+        $response->assertOk();
+        $response->assertViewIs('components.create');
+        $response->assertViewHas('component');
+        $response->assertViewHas('services_list');
+        $response->assertViewHas('lifecycle_list');
+    }
+
+    /**
+     * @test
+     */
+    public function an_authorised_user_can_create_a_component()
+    {
+        $attributes = [
+            'name' => $this->faker->word(3),
+            'description' => $this->faker->paragraph,
+        ];
+
+        $response = $this->actingAs($this->user_create)
+            ->post(route('components.store'), $attributes);
+
+        $component = Component::where($attributes)->first();
+
+        $response->assertRedirect($component->path());
+
+        $response->assertSessionHas('info-message', "New Component added");
+
+        $this->assertDatabaseHas('components', $attributes);
+
+        $this->actingAs($this->user_view)
+            ->get($component->path())
+            ->assertSee($attributes['name'])
+            ->assertSee($attributes['description']);
+
+        $this->get('/components')
+            ->assertSee($attributes['name']);
+
+        $this->assertActionUsesFormRequest(
+            \App\Http\Controllers\ComponentController::class,
+            'store',
+            \App\Http\Requests\ComponentCreateFormRequest::class
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function an_authorised_user_can_view_a_component_edit_page()
+    {
+        $component = factory(Component::class)->create();
+
+        $response = $this->actingAs($this->user_update)->get(route('components.edit', [$component]));
+
+        $response->assertOk();
+        $response->assertViewIs('components.edit');
+        $response->assertViewHas('component');
+        $response->assertViewHas('services_list');
+        $response->assertViewHas('lifecycle_list');
+    }
+
+    /**
+     * @test
+     */
+    public function an_authorised_user_can_edit_a_component()
+    {
+        $component = factory(Component::class)->create();
+
+        $response = $this->actingAs($this->user_update)
+            ->put(route('components.update', [$component]), [
+                'name'   => 'Changed',
+            ]);
+
+        $component->save();
+
+        $response->assertRedirect($component->path());
+
+        $response->assertSessionHas('info-message', "Component updated");
+
+        $this->actingAs($this->user_view)
+            ->get('/components')
+            ->assertSee('Changed');
+
+        $this->assertDatabaseHas('components', ['name' => 'Changed']);
+
+        $this->assertActionUsesFormRequest(
+            \App\Http\Controllers\ComponentController::class,
+            'update',
+            \App\Http\Requests\ComponentUpdateFormRequest::class
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function an_authorised_user_can_delete_a_component()
+    {
+        $component = factory(Component::class)->create();
+        $this->assertDatabaseHas('components', $component->getAttributes());
+
+        $response = $this->actingAs($this->user_delete)->delete('/components/'.$component->id,
+            ['_token'=>csrf_token()], []);
+        $this->assertSoftDeleted('components', $component->getAttributes());
+
+        $response->assertRedirect('components');
+    }
+
+    /**
+     * @test
+     */
+    public function an_authenticated_user_without_permission_cannot_view_the_components_page()
+    {
+        $response = $this->actingAs($this->user_authenticated)
+            ->get(route('components.index'));
+
+        $response->assertForbidden();
+    }
+
+    /**
+     * @test
+     */
+    public function an_authenticated_user_without_permission_cannot_view_a_component_page()
+    {
+        $component = factory(Component::class)->create();
+
+        $response = $this->actingAs($this->user_authenticated)->get(route('components.show', $component));
+
+        $response->assertForbidden();
+    }
+
+    /**
+     * @test
+     */
+    public function an_authenticated_user_without_permission_cannot_view_the_component_create_page()
+    {
+        $response = $this->actingAs($this->user_authenticated)
+            ->get(route('components.create'));
+
+        $response->assertForbidden();
+    }
+
+    /**
+     * @test
+     */
+    public function an_authenticated_user_without_permission_cannot_create_a_component()
+    {
+        $attributes = [
+            'name' => $this->faker->sentence(3),
+            'description' => $this->faker->paragraph,
+        ];
+
+        $this->actingAs($this->user_authenticated)
+            ->post(route('components.store'), $attributes)
+            ->assertForbidden();
+
+        $this->actingAs($this->user_view)
+            ->get('/components')
+            ->assertDontSee($attributes['name']);
+
+        $this->assertDatabaseMissing('components', $attributes);
+    }
+
+    /**
+     * @test
+     */
+    public function an_authenticated_user_without_permission_cannot_view_a_component_edit_page()
+    {
+        $component = factory(Component::class)->create();
+
+        $response = $this->actingAs($this->user_authenticated)
+            ->get(route('components.edit', $component));
+
+        $response->assertForbidden();
+    }
+
+    /**
+     * @test
+     */
+    public function an_authenticated_user_without_permission_cannot_edit_a_component()
+    {
+        $component = factory(Component::class)->create();
+
+        $response = $this->actingAs($this->user_authenticated)
+            ->put(route('components.update', $component), [
+                'name' => 'Changed',
+            ]);
+
+        $response->assertForbidden();
+
+        $this->get('/components')
+            ->assertDontSee('Changed');
+
+        $this->assertDatabaseMissing('components', ['name' => 'Changed']);
+    }
+
+    /**
+     * @test
+     */
+    public function an_authenticated_user_without_permission_cannot_delete_a_component()
+    {
+        $component = factory(Component::class)->create();
+
+        $this->assertDatabaseHas('components', $component->getAttributes());
+
+        $response = $this->actingAs($this->user_authenticated)
+            ->delete('/components/'.$component->id);
+
+        $response->assertForbidden();
+
+        $this->assertDatabaseHas('components', [
+            'id' => $component->id,
+            'deleted_at' => null
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function a_guest_cannot_view_the_components_page()
+    {
+        $response = $this->get(route('components.index'));
+
+        $response->assertRedirect('/login');
+    }
+
+    /**
+     * @test
+     */
+    public function a_guest_cannot_view_a_component_page()
+    {
+        $component = factory(Component::class)->create();
+
+        $response = $this->get(route('components.show', $component));
+
+        $response->assertRedirect('/login');
+    }
+
+    /**
+     * @test
+     */
+    public function a_guest_cannot_view_the_component_create_page()
+    {
+        $response = $this->get(route('components.create'));
+
+        $response->assertRedirect('/login');
+    }
+
+    /**
+     * @test
+     */
+    public function a_guest_cannot_create_a_component()
+    {
+        $attributes = [
+            'name' => $this->faker->sentence(3),
+            'description' => $this->faker->paragraph,
+        ];
+
+        $this->post(route('components.store'), $attributes)
+            ->assertRedirect('/login');
+
+        $this->actingAs($this->user_view)
+            ->get('/components')
+            ->assertDontSee($attributes['name']);
+
+        $this->assertDatabaseMissing('components', $attributes);
+    }
+
+    /**
+     * @test
+     */
+    public function a_guest_cannot_view_a_component_edit_page()
+    {
+        $component = factory(Component::class)->create();
+
+        $response = $this->get(route('components.edit', $component));
+
+        $response->assertRedirect('/login');
+    }
+
+    /**
+     * @test
+     */
+    public function a_guest_cannot_edit_a_component()
+    {
+        $component = factory(Component::class)->create();
+
+        $response = $this->put(route('components.update', $component), [
+            'name' => 'Changed',
+        ]);
+
+        $response->assertRedirect('/login');
+
+        $this->get('/components')
+            ->assertDontSee('Changed');
+
+        $this->assertDatabaseMissing('components', ['name' => 'Changed']);
+    }
+
+    /**
+     * @test
+     */
+    public function a_guest_cannot_delete_a_component()
+    {
+        $component = factory(Component::class)->create();
+
+        $this->assertDatabaseHas('components', $component->getAttributes());
+
+        $response = $this->delete('/components/'.$component->id);
+
+        $this->assertDatabaseHas('components', [
+            'id' => $component->id,
+            'deleted_at' => null,
+        ]);
+
+        $response->assertRedirect('/login');
+    }
+}

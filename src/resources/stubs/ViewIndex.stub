@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="flex-1 overflow-y-auto">
+
+    </div>
+
+
+
+
     <div class="container mx-auto">
         <div class="flex flex-wrap justify-center">
             <div class="w-full max-w-sm">

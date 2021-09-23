@@ -1,0 +1,22 @@
+<?php
+
+namespace Tests\Unit;
+
+use App\Models\Category;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+class CategoryTest extends TestCase
+{
+    use RefreshDatabase;
+
+    /**
+     * @test
+     */
+    public function it_has_path()
+    {
+        $idea = Category::factory()->create();
+        $this->assertEquals(url('/admin/categories/'.$idea->id), $idea->path());
+
+    }
+}
