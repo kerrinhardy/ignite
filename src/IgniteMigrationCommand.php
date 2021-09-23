@@ -52,6 +52,17 @@ class IgniteMigrationCommand extends Command
     }
 
     /**
+     * Get the full path to the factory.
+     *
+     * @param string $name
+     * @return string
+     */
+    protected function getFactoryPath($name)
+    {
+        return base_path() . '/database/factories/' . $name . 'Factory.php';
+    }
+
+    /**
      * Get the full path to the views.
      *
      * @param string $name
@@ -89,6 +100,22 @@ class IgniteMigrationCommand extends Command
                 $factory .= PHP_EOL . $column .' => $this->faker->words(2, true),';
             }
         }
+
+        $factoryTemplate = str_replace(
+            [
+                '{{modelNamePlural}}',
+                '{{modelNamePluralLowerCase}}',
+                '{{columns}}'
+            ],
+            [
+                Str::plural(Str::studly($name)),
+                Str::plural(strtolower($name)),
+                $factory
+            ],
+            $this->getStub('Factory')
+        );
+
+        file_put_contents($this->getFactoryPath($name), $factoryTemplate);
     }
 
     /**
