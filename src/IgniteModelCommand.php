@@ -49,7 +49,7 @@ class IgniteModelCommand extends Command
             $this->getStub('Model')
         );
 
-        file_put_contents(app_path("/{$name}.php"), $modelTemplate);
+        file_put_contents(app_path("/models/{$name}.php"), $modelTemplate);
     }
 
     /**
