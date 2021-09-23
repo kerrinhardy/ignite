@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Permission;
 
 class {{modelName}}PermissionsSeeder extends Seeder
 {
@@ -11,7 +12,33 @@ class {{modelName}}PermissionsSeeder extends Seeder
      */
     public function run()
     {
-        $now = date('Y-m-d H:i:s');
+        Permission::factory()->create([
+            'name' => '{{modelNamePluralLowerCase}}-view',
+            'label' => 'View {{modelNamePlural}}',
+            'description' => 'This permission provides read-only view of {{modelNamePluralLowerCase}}.'
+        ]);
+
+        Permission::factory()->create([
+            'name' => '{{modelNamePluralLowerCase}}-create',
+            'label' => 'Create {{modelNamePlural}}',
+            'description' => 'This permission allows creation of new {{modelNamePluralLowerCase}}.'
+        ]);
+
+        Permission::factory()->create([
+            'name' => '{{modelNamePluralLowerCase}}-update',
+            'label' => 'Update {{modelNamePlural}}',
+            'description' => 'This permission allows updating of existing {{modelNamePluralLowerCase}}.'
+        ]);
+
+        Permission::factory()->create([
+            'name' => '{{modelNamePluralLowerCase}}-delete',
+            'label' => 'Delete {{modelNamePlural}}',
+            'description' => 'This permission allows deletion of existing {{modelNamePluralLowerCase}}.'
+        ]);
+
+
+
+
 
         DB::table('permissions')->insert([
             'name' => '{{modelNamePluralLowerCase}}-view',
