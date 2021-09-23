@@ -103,13 +103,11 @@ class IgniteMigrationCommand extends Command
 
         $factoryTemplate = str_replace(
             [
-                '{{modelNamePlural}}',
-                '{{modelNamePluralLowerCase}}',
+                '{{modelName}}',
                 '{{columns}}'
             ],
             [
-                Str::plural(Str::studly($name)),
-                Str::plural(strtolower($name)),
+                $name,
                 $factory
             ],
             $this->getStub('Factory')
