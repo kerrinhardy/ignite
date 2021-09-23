@@ -217,7 +217,7 @@ class IgniteModelCommand extends Command
      *
      * @var string
      */
-    protected function test_feature($name)
+    protected function testFeature($name)
     {
         $testFeatureTemplate = str_replace(
             [
@@ -237,7 +237,7 @@ class IgniteModelCommand extends Command
             mkdir($path, 0770, true);
         }
 
-        file_put_contents(app_path("/tests/Feature/Manage{".Str::plural($name)."}Test.php"), $testFeatureTemplate);
+        file_put_contents(base_path("/tests/Feature/Manage".Str::plural($name)."Test.php"), $testFeatureTemplate);
     }
 
     /**
@@ -245,7 +245,7 @@ class IgniteModelCommand extends Command
      *
      * @var string
      */
-    protected function test_unit($name)
+    protected function testUnit($name)
     {
         $testUnitTemplate = str_replace(
             [
@@ -265,7 +265,7 @@ class IgniteModelCommand extends Command
             mkdir($path, 0770, true);
         }
 
-        file_put_contents(app_path("/tests/Unit/{$name}Test.php"), $testUnitTemplate);
+        file_put_contents(base_path("/tests/Unit/{$name}Test.php"), $testUnitTemplate);
     }
 
     /**
@@ -308,10 +308,10 @@ class IgniteModelCommand extends Command
         $this->factory($name);
         $this->info('Factory for ' . $name . ' created successfully.');
 
-        $this->test_feature($name);
+        $this->testFeature($name);
         $this->info('Feature Test for ' . $name . ' created successfully.');
 
-        $this->test_unit($name);
+        $this->testUnit($name);
         $this->info('Unit Test for ' . $name . ' created successfully.');
 
 //        File::append(base_path('routes/api.php'),
