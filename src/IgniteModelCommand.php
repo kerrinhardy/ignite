@@ -192,8 +192,14 @@ class IgniteModelCommand extends Command
     protected function observer($name)
     {
         $observerTemplate = str_replace(
-            ['{{modelName}}'],
-            [$name],
+            [
+                '{{modelName}}',
+                '{{modelNameSingularLowerCase}}'
+            ],
+            [
+                $name,
+                strtolower($name)
+            ],
             $this->getStub('Observer')
         );
 
@@ -259,7 +265,8 @@ class IgniteModelCommand extends Command
             mkdir($path, 0770, true);
         }
 
-        file_put_contents(base_path("/database/seeders/".$name."PermissionsSeeder.php"), $seederPermissionsTemplate);
+        file_put_contents(base_path("/database/seeders/" . $name . "PermissionsSeeder.php"),
+            $seederPermissionsTemplate);
     }
 
     /**
@@ -289,7 +296,7 @@ class IgniteModelCommand extends Command
             mkdir($path, 0770, true);
         }
 
-        file_put_contents(base_path("/tests/Feature/Manage".Str::plural($name)."Test.php"), $testFeatureTemplate);
+        file_put_contents(base_path("/tests/Feature/Manage" . Str::plural($name) . "Test.php"), $testFeatureTemplate);
     }
 
     /**
