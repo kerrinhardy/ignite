@@ -16,7 +16,7 @@ class {{modelName}}Test extends TestCase
     public function it_has_path()
     {
         ${{modelNameSingularLowerCase}} = {{modelName}}::factory()->create();
-        $this->assertEquals(url('/admin/{{modelNamePluralLowerCase}}/'.${{modelNameSingularLowerCase}}->id), ${{modelNameSingularLowerCase}}->path());
+        $this->assertEquals(url('/{{modelNamePluralLowerCase}}/'.${{modelNameSingularLowerCase}}->id), ${{modelNameSingularLowerCase}}->path());
 
     }
 }
