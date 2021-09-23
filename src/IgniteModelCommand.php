@@ -213,6 +213,36 @@ class IgniteModelCommand extends Command
     }
 
     /**
+     * Create a new Seeder from the stub and the name entered in the command to populate permissions table.
+     *
+     * @var string
+     */
+    protected function permissionsSeeder($name)
+    {
+        $seederPermissionsTemplate = str_replace(
+            [
+                '{{modelName}}',
+                '{{modelNamePlural}}',
+                '{{modelNamePluralLowerCase}}',
+                '{{modelNameSingularLowerCase}}'
+            ],
+            [
+                $name,
+                Str::plural($name),
+                strtolower(Str::plural($name)),
+                strtolower($name)
+            ],
+            $this->getStub('SeederPermissions')
+        );
+
+        if (!file_exists($path = base_path('/database/seeders'))) {
+            mkdir($path, 0770, true);
+        }
+
+        file_put_contents(base_path("/database/seeders/".Str::plural($name)."PermissionsSeeder.php"), $seederPermissionsTemplate);
+    }
+
+    /**
      * Create a new Feature Test from the stub and the name entered in the command.
      *
      * @var string
@@ -306,6 +336,9 @@ class IgniteModelCommand extends Command
 
         $this->policy($name);
         $this->info('Policy for ' . $name . ' created successfully.');
+
+        $this->permissionsSeeder($name);
+        $this->info('Permission Seeder for ' . $name . ' created successfully.');
 
         $this->factory($name);
         $this->info('Factory for ' . $name . ' created successfully.');

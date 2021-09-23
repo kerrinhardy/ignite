@@ -1,0 +1,48 @@
+<?php
+
+use Illuminate\Database\Seeder;
+
+class {{modelName}}PermissionsSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $now = date('Y-m-d H:i:s');
+
+        DB::table('permissions')->insert([
+            'name' => '{{modelNamePluralLowerCase}}-view',
+            'label' => 'View {{modelNamePlural}}',
+            'description' => 'This permission provides read-only view of {{modelNamePluralLowerCase}}.',
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        DB::table('permissions')->insert([
+            'name' => '{{modelNamePluralLowerCase}}-create',
+            'label' => 'Create {{modelNamePlural}}',
+            'description' => 'This permission allows creation of new {{modelNamePluralLowerCase}}.',
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        DB::table('permissions')->insert([
+            'name' => '{{modelNamePluralLowerCase}}-update',
+            'label' => 'Update {{modelNamePlural}}',
+            'description' => 'This permission allows updating of existing {{modelNamePluralLowerCase}}.',
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        DB::table('permissions')->insert([
+            'name' => '{{modelNamePluralLowerCase}}-delete',
+            'label' => 'Delete {{modelNamePlural}}',
+            'description' => 'This permission allows deletion of existing {{modelNamePluralLowerCase}}.',
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+    }
+}

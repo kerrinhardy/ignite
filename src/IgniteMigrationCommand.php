@@ -372,6 +372,9 @@ class IgniteMigrationCommand extends Command
         $this->migration($name, $columns, $other_migrations);
         $this->info('Migration for ' . $name . ' created successfully.');
 
+        $this->seeder($name, $columns);
+        $this->info('Seeder for ' . $name . ' created successfully.');
+
 //        $this->views($name, $columns);
 //        $this->info('CRUD views for ' . $name . ' created successfully.');
     }
