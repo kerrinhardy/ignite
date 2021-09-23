@@ -97,7 +97,7 @@ class IgniteMigrationCommand extends Command
 
         foreach ($columns as $column => $type) {
             if (strpos($type, "string") === 0) {
-                $factory .= PHP_EOL . "'" . $column . "'" ." => $this->faker->words(2, true),";
+                $factory .= PHP_EOL . "'" . $column . "'" .' => $this->faker->words(2, true),';
             }
         }
 
