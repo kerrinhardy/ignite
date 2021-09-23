@@ -239,7 +239,7 @@ class IgniteModelCommand extends Command
             mkdir($path, 0770, true);
         }
 
-        file_put_contents(base_path("/database/seeders/".Str::plural($name)."PermissionsSeeder.php"), $seederPermissionsTemplate);
+        file_put_contents(base_path("/database/seeders/".$name."PermissionsSeeder.php"), $seederPermissionsTemplate);
     }
 
     /**
@@ -338,7 +338,7 @@ class IgniteModelCommand extends Command
         $this->info('Policy for ' . $name . ' created successfully.');
 
         $this->permissionsSeeder($name);
-        $this->info('Permission Seeder for ' . $name . ' created successfully.');
+        $this->info('Permissions Seeder for ' . $name . ' created successfully.');
 
         $this->factory($name);
         $this->info('Factory for ' . $name . ' created successfully.');
