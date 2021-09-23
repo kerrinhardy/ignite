@@ -53,35 +53,35 @@ class IgniteModelCommand extends Command
     }
 
     /**
-     * Get the full path to the factory.
+     * Get the full path to the seeder.
      *
      * @param string $name
      * @return string
      */
-    protected function getFactoryPath($name)
+    protected function getSeederPath($name)
     {
-        return base_path() . '/database/factories/' . $name . 'Factory.php';
+        return base_path() . '/database/seeders/' . $name . 'Seeder.php';
     }
 
     /**
-     * Create a new Factory from the stub and the names entered in the command.
+     * Create a new Seeder from the stub and the names entered in the command.
      *
      * @var string
      * @var array
      */
-    protected function factory($name)
+    protected function seeder($name)
     {
-        $factoryTemplate = str_replace(
+        $seederTemplate = str_replace(
             [
                 '{{modelName}}'
             ],
             [
                 $name
             ],
-            $this->getStub('Factory')
+            $this->getStub('Seeder')
         );
 
-        file_put_contents($this->getFactoryPath($name), $factoryTemplate);
+        file_put_contents($this->getSeederPath($name), $seederTemplate);
     }
 
     /**
@@ -370,8 +370,8 @@ class IgniteModelCommand extends Command
         $this->permissionsSeeder($name);
         $this->info('Permissions Seeder for ' . $name . ' created successfully.');
 
-        $this->factory($name);
-        $this->info('Factory for ' . $name . ' created successfully.');
+        $this->seeder($name);
+        $this->info('Seeder for ' . $name . ' created successfully.');
 
         $this->testFeature($name);
         $this->info('Feature Test for ' . $name . ' created successfully.');

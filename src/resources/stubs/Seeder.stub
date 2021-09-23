@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\{{modelName}};
 
 class {{modelName}}Seeder extends Seeder
 {
@@ -13,6 +14,6 @@ class {{modelName}}Seeder extends Seeder
      */
     public function run()
     {
-        {{columns}}
+        {{modelName}}::factory(10)->create();
     }
 }

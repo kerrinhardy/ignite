@@ -73,6 +73,25 @@ class IgniteMigrationCommand extends Command
     }
 
     /**
+     * Create a new Factory from the stub and the names entered in the command.
+     *
+     * @var string
+     * @var array
+     */
+    protected function factory($name, $columns)
+    {
+        $columns = array_map('strtolower', $columns);
+
+        $factory = '';
+
+        foreach ($columns as $column => $type) {
+            if (strpos($type, "string") === 0) {
+                $factory .= PHP_EOL . $column .' => $this->faker->words(2, true),';
+            }
+        }
+    }
+
+    /**
      * Create a new Migration from the stub and the names entered in the command.
      *
      * @var string
@@ -372,8 +391,8 @@ class IgniteMigrationCommand extends Command
         $this->migration($name, $columns, $other_migrations);
         $this->info('Migration for ' . $name . ' created successfully.');
 
-        $this->seeder($name, $columns);
-        $this->info('Seeder for ' . $name . ' created successfully.');
+        $this->factory($name, $columns);
+        $this->info('Factory for ' . $name . ' created successfully.');
 
 //        $this->views($name, $columns);
 //        $this->info('CRUD views for ' . $name . ' created successfully.');
