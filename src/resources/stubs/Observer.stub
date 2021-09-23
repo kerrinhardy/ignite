@@ -18,7 +18,7 @@ class {{modelName}}Observer
     /**
      * Handle the {{modelName}} "created" event.
      *
-     * @param  \App\Models\{{modelName}}  ${{modelNameSingularLowerCase}}
+     * @param  {{modelName}} ${{modelNameSingularLowerCase}}
      * @return void
      */
     public function created({{modelName}} ${{modelNameSingularLowerCase}})
@@ -29,7 +29,7 @@ class {{modelName}}Observer
     /**
      * Handle the {{modelName}} "updated" event.
      *
-     * @param  \App\Models\{{modelName}}  ${{modelNameSingularLowerCase}}
+     * @param  {{modelName}} ${{modelNameSingularLowerCase}}
      * @return void
      */
     public function updated({{modelName}} ${{modelNameSingularLowerCase}})
@@ -40,7 +40,7 @@ class {{modelName}}Observer
     /**
      * Handle the {{modelName}} "deleted" event.
      *
-     * @param  \App\Models\{{modelName}}  ${{modelNameSingularLowerCase}}
+     * @param  {{modelName}} ${{modelNameSingularLowerCase}}
      * @return void
      */
     public function deleted({{modelName}} ${{modelNameSingularLowerCase}})
@@ -51,7 +51,7 @@ class {{modelName}}Observer
     /**
      * Handle the {{modelName}} "restored" event.
      *
-     * @param  \App\Models\{{modelName}}  ${{modelNameSingularLowerCase}}
+     * @param  {{modelName}} ${{modelNameSingularLowerCase}}
      * @return void
      */
     public function restored({{modelName}} ${{modelNameSingularLowerCase}})
@@ -62,7 +62,7 @@ class {{modelName}}Observer
     /**
      * Handle the {{modelName}} "force deleted" event.
      *
-     * @param  \App\Models\{{modelName}}  ${{modelNameSingularLowerCase}}
+     * @param  {{modelName}} ${{modelNameSingularLowerCase}}
      * @return void
      */
     public function forceDeleted({{modelName}} ${{modelNameSingularLowerCase}})
