@@ -80,6 +80,8 @@ class IgniteMigrationCommand extends Command
      */
     protected function migration($name, $columns, $other_migrations)
     {
+        $columns = array_map('strtolower', $columns);
+
         $migrations = '';
 
         $parameters_not_required = [

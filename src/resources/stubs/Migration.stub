@@ -16,7 +16,6 @@ class Create{{modelNamePlural}}Table extends Migration
         Schema::create('{{modelNamePluralLowerCase}}', function (Blueprint $table) {
             $table->bigIncrements('id');{{columns}}
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
