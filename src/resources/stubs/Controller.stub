@@ -58,7 +58,7 @@ class {{modelName}}Controller extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\{{modelName}}  ${{modelNameSingularLowerCase}}
+     * @param  {{modelName}}  ${{modelNameSingularLowerCase}}
      * @return \Illuminate\Http\Response
      */
     public function show({{modelName}} ${{modelNameSingularLowerCase}})
@@ -71,7 +71,7 @@ class {{modelName}}Controller extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\{{modelName}}  ${{modelNameSingularLowerCase}}
+     * @param  {{modelName}}  ${{modelNameSingularLowerCase}}
      * @return \Illuminate\Http\Response
      */
      public function edit({{modelName}} ${{modelNameSingularLowerCase}})
@@ -85,7 +85,7 @@ class {{modelName}}Controller extends Controller
      * Update the specified resource in storage.
      *
      * @param  {{modelName}}UpdateFormRequest  $request
-     * @param  \App\{{modelName}}  ${{modelNameSingularLowerCase}}
+     * @param  {{modelName}}  ${{modelNameSingularLowerCase}}
      * @return \Illuminate\Http\Response
      */
     public function update({{modelName}}UpdateFormRequest $request, {{modelName}} ${{modelNameSingularLowerCase}})
@@ -100,7 +100,7 @@ class {{modelName}}Controller extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\{{modelName}}  ${{modelNameSingularLowerCase}}
+     * @param  {{modelName}}  ${{modelNameSingularLowerCase}}
      * @return \Illuminate\Http\Response
      */
     public function destroy({{modelName}} ${{modelNameSingularLowerCase}})
