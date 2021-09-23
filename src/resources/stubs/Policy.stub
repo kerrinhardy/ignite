@@ -17,7 +17,9 @@
         */
         public function viewAny(User $user)
         {
-            return true;
+            $permission = Permission::where('name', '{{modelNamePluralLowerCase}}-view')->first();
+
+            return $user->hasRole($permission->roles);
         }
 
         /**
@@ -29,7 +31,9 @@
              */
             public function view(User $user, {{modelName}} ${{modelNameSingularLowerCase}})
             {
-                //
+                $permission = Permission::where('name', '{{modelNamePluralLowerCase}}-view')->first();
+
+                return $user->hasRole($permission->roles);
             }
 
             /**
@@ -40,7 +44,9 @@
              */
             public function create(User $user)
             {
-                //
+                $permission = Permission::where('name', '{{modelNamePluralLowerCase}}-create')->first();
+
+                return $user->hasRole($permission->roles);
             }
 
             /**
@@ -52,7 +58,9 @@
              */
             public function update(User $user, {{modelName}} ${{modelNameSingularLowerCase}})
             {
-                //
+                $permission = Permission::where('name', '{{modelNamePluralLowerCase}}-update')->first();
+
+                return $user->hasRole($permission->roles);
             }
 
             /**
@@ -64,7 +72,9 @@
              */
             public function delete(User $user, {{modelName}} ${{modelNameSingularLowerCase}})
             {
-                //
+                $permission = Permission::where('name', '{{modelNamePluralLowerCase}}-delete')->first();
+
+                return $user->hasRole($permission->roles);
             }
 
             /**
@@ -76,7 +86,9 @@
              */
             public function restore(User $user, {{modelName}} ${{modelNameSingularLowerCase}})
             {
-                //
+                $permission = Permission::where('name', '{{modelNamePluralLowerCase}}-restore')->first();
+
+                return $user->hasRole($permission->roles);
             }
 
             /**
@@ -88,7 +100,9 @@
              */
             public function forceDelete(User $user, {{modelName}} ${{modelNameSingularLowerCase}})
             {
-                //
+                $permission = Permission::where('name', '{{modelNamePluralLowerCase}}-forceDelete')->first();
+
+                return $user->hasRole($permission->roles);
             }
 
     }

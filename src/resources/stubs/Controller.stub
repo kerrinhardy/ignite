@@ -3,17 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\{{modelName}}FormRequest;
-use App\{{modelName}};
+use App\Models\{{modelName}};
 
+
+/**
+ * Class {{modelName}}Controller.
+ */
 class {{modelName}}Controller extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
+        $this->authorize('view', {{modelName}}::class);
+
         ${{modelNamePluralLowerCase}} = {{modelName}}::all();
 
         return view('{{modelNamePluralLowerCase}}.index', ['{{modelNamePluralLowerCase}}' => ${{modelNamePluralLowerCase}}]);
@@ -26,7 +33,10 @@ class {{modelName}}Controller extends Controller
      */
      public function create()
      {
-        //
+        $this->authorize('create', {{modelName}}::class);
+
+
+        return view('{{modelNamePluralLowerCase}}.create', ['{{modelNameSingularLowerCase}}' => new {{modelName}}() ]);
      }
 
     /**
@@ -35,11 +45,13 @@ class {{modelName}}Controller extends Controller
      * @param  {{modelName}}FormRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store({{modelName}}FormRequest $request)
+    public function store({{modelName}}CreateFormRequest $request)
     {
+        $this->authorize('create', {{modelName}}::class);
+
         ${{modelNameSingularLowerCase}} = {{modelName}}::create($request->all());
 
-        return redirect()->route('{{modelNamePluralLowerCase}}.index');
+        return redirect()->route('{{modelNamePluralLowerCase}}.show', ${{modelNameSingularLowerCase}});
     }
 
     /**
@@ -50,7 +62,7 @@ class {{modelName}}Controller extends Controller
      */
     public function show({{modelName}} ${{modelNameSingularLowerCase}})
     {
-        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail(${{modelNameSingularLowerCase}});
+        $this->authorize('view', {{modelName}}::class);
 
         return view('{{modelNamePluralLowerCase}}.show', ['{{modelNameSingularLowerCase}}' => ${{modelNameSingularLowerCase}}]);
     }
@@ -63,7 +75,9 @@ class {{modelName}}Controller extends Controller
      */
      public function edit({{modelName}} ${{modelNameSingularLowerCase}})
      {
-        //
+        $this->authorize('update', {{modelName}}::class);
+
+        return view('{{modelNamePluralLowerCase}}.edit', ['{{modelNameSingularLowerCase}}' => ${{modelNameSingularLowerCase}}]);
      }
 
     /**
@@ -75,7 +89,7 @@ class {{modelName}}Controller extends Controller
      */
     public function update({{modelName}}FormRequest $request, {{modelName}} ${{modelNameSingularLowerCase}})
     {
-        ${{modelNameSingularLowerCase}} = {{modelName}}::findOrFail(${{modelNameSingularLowerCase}});
+        $this->authorize('update', {{modelName}}::class);
 
         ${{modelNameSingularLowerCase}}->update($request->all());
 
@@ -90,8 +104,10 @@ class {{modelName}}Controller extends Controller
      */
     public function destroy({{modelName}} ${{modelNameSingularLowerCase}})
     {
+        $this->authorize('delete', {{modelName}}::class);
+
         ${{modelNameSingularLowerCase}}->delete();
 
-        return response()->json(null, 204);
+        return redirect('{{modelNamePluralLowerCase}}')->with('info-message', '{{modelName}} deleted');
     }
 }
