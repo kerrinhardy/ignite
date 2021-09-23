@@ -233,11 +233,11 @@ class IgniteModelCommand extends Command
             $this->getStub('TestFeature')
         );
 
-        if (!file_exists($path = app_path('/Tests/Feature'))) {
+        if (!file_exists($path = app_path('/tests/Feature'))) {
             mkdir($path, 0770, true);
         }
 
-        file_put_contents(app_path("/Tests/Feature/Manage{".Str::plural($name)."}Test.php"), $testFeatureTemplate);
+        file_put_contents(app_path("/tests/Feature/Manage{".Str::plural($name)."}Test.php"), $testFeatureTemplate);
     }
 
     /**
@@ -258,14 +258,14 @@ class IgniteModelCommand extends Command
                 strtolower(Str::plural($name)),
                 strtolower($name)
             ],
-            $this->getStub('TestFeature')
+            $this->getStub('TestUnit')
         );
 
-        if (!file_exists($path = app_path('/Tests/Unit'))) {
+        if (!file_exists($path = app_path('/tests/Unit'))) {
             mkdir($path, 0770, true);
         }
 
-        file_put_contents(app_path("/Tests/Unit/{$name}Test.php"), $testUnitTemplate);
+        file_put_contents(app_path("/tests/Unit/{$name}Test.php"), $testUnitTemplate);
     }
 
     /**
