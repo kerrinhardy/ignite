@@ -145,23 +145,43 @@ class IgniteModelCommand extends Command
     }
 
     /**
-     * Create a new Request from the stub and the name entered in the command.
+     * Create a new Create Form Request from the stub and the name entered in the command.
      *
      * @var string
      */
-    protected function request($name)
+    protected function formRequestCreate($name)
     {
-        $requestTemplate = str_replace(
+        $formRequestCreateTemplate = str_replace(
             ['{{modelName}}'],
             [$name],
-            $this->getStub('Request')
+            $this->getStub('FormRequestCreate')
         );
 
         if (!file_exists($path = app_path('/Http/Requests'))) {
             mkdir($path, 0770, true);
         }
 
-        file_put_contents(app_path("/Http/Requests/{$name}FormRequest.php"), $requestTemplate);
+        file_put_contents(app_path("/Http/Requests/{$name}FormRequest.php"), $formRequestCreateTemplate);
+    }
+
+    /**
+     * Create a new Update Form Request from the stub and the name entered in the command.
+     *
+     * @var string
+     */
+    protected function formRequestUpdate($name)
+    {
+        $formRequestUpdateTemplate = str_replace(
+            ['{{modelName}}'],
+            [$name],
+            $this->getStub('FormRequestUpdate')
+        );
+
+        if (!file_exists($path = app_path('/Http/Requests'))) {
+            mkdir($path, 0770, true);
+        }
+
+        file_put_contents(app_path("/Http/Requests/{$name}FormRequest.php"), $formRequestUpdateTemplate);
     }
 
     /**
@@ -276,8 +296,11 @@ class IgniteModelCommand extends Command
         $this->model($name);
         $this->info('Model for ' . $name . ' created successfully.');
 
-        $this->request($name);
-        $this->info('Request for ' . $name . ' created successfully.');
+        $this->formRequestCreate($name);
+        $this->info('Form Request Create for ' . $name . ' created successfully.');
+
+        $this->formRequestUpdate($name);
+        $this->info('Form Request Update for ' . $name . ' created successfully.');
 
         $this->policy($name);
         $this->info('Policy for ' . $name . ' created successfully.');
