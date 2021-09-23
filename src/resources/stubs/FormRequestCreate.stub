@@ -3,7 +3,7 @@
 
     use Illuminate\Foundation\Http\FormRequest;
 
-    class {{modelName}}FormRequest extends FormRequest
+    class {{modelName}}CreateFormRequest extends FormRequest
     {
         /**
          * Determine if the user is authorized to make this request.
