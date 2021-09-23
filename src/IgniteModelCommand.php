@@ -193,6 +193,62 @@ class IgniteModelCommand extends Command
     }
 
     /**
+     * Create a new Feature Test from the stub and the name entered in the command.
+     *
+     * @var string
+     */
+    protected function test_feature($name)
+    {
+        $testFeatureTemplate = str_replace(
+            [
+                '{{modelName}}',
+                '{{modelNamePluralLowerCase}}',
+                '{{modelNameSingularLowerCase}}'
+            ],
+            [
+                $name,
+                strtolower(Str::plural($name)),
+                strtolower($name)
+            ],
+            $this->getStub('TestFeature')
+        );
+
+        if (!file_exists($path = app_path('/Tests/Feature'))) {
+            mkdir($path, 0770, true);
+        }
+
+        file_put_contents(app_path("/Tests/Feature/Manage{".Str::plural($name)."}Test.php"), $testFeatureTemplate);
+    }
+
+    /**
+     * Create a new Unit Test from the stub and the name entered in the command.
+     *
+     * @var string
+     */
+    protected function test_unit($name)
+    {
+        $testUnitTemplate = str_replace(
+            [
+                '{{modelName}}',
+                '{{modelNamePluralLowerCase}}',
+                '{{modelNameSingularLowerCase}}'
+            ],
+            [
+                $name,
+                strtolower(Str::plural($name)),
+                strtolower($name)
+            ],
+            $this->getStub('TestFeature')
+        );
+
+        if (!file_exists($path = app_path('/Tests/Unit'))) {
+            mkdir($path, 0770, true);
+        }
+
+        file_put_contents(app_path("/Tests/Unit/{$name}Test.php"), $testUnitTemplate);
+    }
+
+    /**
      * Create a new command instance.
      *
      * @return void
@@ -228,6 +284,12 @@ class IgniteModelCommand extends Command
 
         $this->factory($name);
         $this->info('Factory for ' . $name . ' created successfully.');
+
+        $this->test_feature($name);
+        $this->info('Feature Test for ' . $name . ' created successfully.');
+
+        $this->test_unit($name);
+        $this->info('Unit Test for ' . $name . ' created successfully.');
 
 //        File::append(base_path('routes/api.php'),
 //            PHP_EOL . 'Route::resource(\'' . strtolower(Str::plural($name)) . "', '{$name}Controller');");

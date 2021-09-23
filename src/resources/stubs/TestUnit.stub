@@ -2,11 +2,11 @@
 
 namespace Tests\Unit;
 
-use App\Models\Category;
+use App\Models\{{modelName}};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class CategoryTest extends TestCase
+class {{modelName}}Test extends TestCase
 {
     use RefreshDatabase;
 
@@ -15,8 +15,8 @@ class CategoryTest extends TestCase
      */
     public function it_has_path()
     {
-        $idea = Category::factory()->create();
-        $this->assertEquals(url('/admin/categories/'.$idea->id), $idea->path());
+        ${{modelNameSingularLowerCase}} = {{modelName}}::factory()->create();
+        $this->assertEquals(url('/admin/{{modelNamePluralLowerCase}}/'.${{modelNameSingularLowerCase}}->id), ${{modelNameSingularLowerCase}}->path());
 
     }
 }
