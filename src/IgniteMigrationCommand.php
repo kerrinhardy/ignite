@@ -74,6 +74,17 @@ class IgniteMigrationCommand extends Command
     }
 
     /**
+     * Get the full path to the view partials.
+     *
+     * @param string $name
+     * @return string
+     */
+    protected function getViewPartialsPath($name)
+    {
+        return base_path() . '/resources/views/partials/' . Str::plural(strtolower($name)) . '/';
+    }
+
+    /**
      * Create a new command instance.
      *
      * @return void
@@ -331,17 +342,22 @@ class IgniteMigrationCommand extends Command
         );
 
 
-        $directoryPath = $this->getViewsPath($name);
+        $viewsPath = $this->getViewsPath($name);
+        $partialsPath = $this->getViewPartialssPath($name);
 
-        if (!File::exists($directoryPath)) {
-            File::makeDirectory($directoryPath, 0770, true);
+        if (!File::exists($viewsPath)) {
+            File::makeDirectory($viewsPath, 0770, true);
         }
 
-        file_put_contents($directoryPath . 'index.blade.php', $viewIndexTemplate);
-        file_put_contents($directoryPath . 'show.blade.php', $viewShowTemplate);
-        file_put_contents($directoryPath . 'partials/form.blade.php', $viewFormTemplate);
-        file_put_contents($directoryPath . 'partials/create.blade.php', $viewCreateTemplate);
-        file_put_contents($directoryPath . 'partials/edit.blade.php', $viewEditTemplate);
+        if (!File::exists($partialsPath)) {
+            File::makeDirectory($partialsPath, 0770, true);
+        }
+
+        file_put_contents($viewsPath . 'index.blade.php', $viewIndexTemplate);
+        file_put_contents($viewsPath . 'show.blade.php', $viewShowTemplate);
+        file_put_contents($partialsPath . 'form.blade.php', $viewFormTemplate);
+        file_put_contents($viewsPath . 'create.blade.php', $viewCreateTemplate);
+        file_put_contents($viewsPath . 'edit.blade.php', $viewEditTemplate);
     }
 
     /**
