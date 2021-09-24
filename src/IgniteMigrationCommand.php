@@ -343,7 +343,7 @@ class IgniteMigrationCommand extends Command
 
 
         $viewsPath = $this->getViewsPath($name);
-        $partialsPath = $this->getViewPartialssPath($name);
+        $partialsPath = $this->getViewPartialsPath($name);
 
         if (!File::exists($viewsPath)) {
             File::makeDirectory($viewsPath, 0770, true);
