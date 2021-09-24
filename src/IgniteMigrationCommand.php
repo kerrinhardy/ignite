@@ -246,7 +246,7 @@ class IgniteMigrationCommand extends Command
      * @var string
      * @var array
      */
-    protected function views($name, $columns)
+    protected function views($name)
     {
         $viewIndexTemplate = str_replace(
             [
@@ -295,7 +295,7 @@ class IgniteMigrationCommand extends Command
         file_put_contents($directoryPath . 'index.blade.php', $viewIndexTemplate);
 //        file_put_contents($directoryPath . 'show.blade.php', $viewShowTemplate);
     }
-    
+
     /**
      * Execute the console command.
      *
