@@ -99,6 +99,15 @@ class IgniteMigrationCommand extends Command
             if (strpos($type, "string") === 0) {
                 $factory .= PHP_EOL . "'" . $column . "'" .' => $this->faker->words(2, true),';
             }
+            if (strpos($type, "text") === 0) {
+                $factory .= PHP_EOL . "'" . $column . "'" .' => $this->faker->paragraphs(2),';
+            }
+            if (strpos($type, "integer") === 0) {
+                $factory .= PHP_EOL . "'" . $column . "'" .' => $this->faker->randomDigit,';
+            }
+            if (strpos($type, "boolean") === 0) {
+                $factory .= PHP_EOL . "'" . $column . "'" .' => $this->faker->boolean,';
+            }
         }
 
         $factoryTemplate = str_replace(
@@ -243,38 +252,40 @@ class IgniteMigrationCommand extends Command
             [
                 '{{modelName}}',
                 '{{modelNamePlural}}',
-                '{{modelNamePluralLowerCase}}'
+                '{{modelNamePluralLowerCase}}',
+                '{{modelNameSingularLowerCase}}'
             ],
             [
-                strtolower($name),
+                $name,
                 Str::plural($name),
-                Str::plural(strtolower($name))
+                Str::plural(strtolower($name)),
+                strtolower($name)
             ],
             $this->getStub('ViewIndex')
         );
 
-        $modelFields = [];
-
-        foreach ($columns as $column => $type) {
-            array_push($modelFields, $column);
-        }
-
-        $viewShowTemplate = str_replace(
-            [
-                '{{modelNameSingularLowerCase}}',
-                '{{modelName}}',
-                '{{modelNamePlural}}',
-                '{{modelFields}}'
-            ],
-            [
-                strtolower($name),
-                $name,
-                Str::plural($name),
-                $modelFields
-            ],
-            $this->getStub('ViewShow')
-        );
-
+//        $modelFields = [];
+//
+//        foreach ($columns as $column => $type) {
+//            array_push($modelFields, $column);
+//        }
+//
+//        $viewShowTemplate = str_replace(
+//            [
+//                '{{modelNameSingularLowerCase}}',
+//                '{{modelName}}',
+//                '{{modelNamePlural}}',
+//                '{{modelFields}}'
+//            ],
+//            [
+//                strtolower($name),
+//                $name,
+//                Str::plural($name),
+//                $modelFields
+//            ],
+//            $this->getStub('ViewShow')
+//        );
+//
         $directoryPath = $this->getViewsPath($name);
 
         if (!File::exists($directoryPath)) {
@@ -282,11 +293,9 @@ class IgniteMigrationCommand extends Command
         }
 
         file_put_contents($directoryPath . 'index.blade.php', $viewIndexTemplate);
-        file_put_contents($directoryPath . 'show.blade.php', $viewShowTemplate);
+//        file_put_contents($directoryPath . 'show.blade.php', $viewShowTemplate);
     }
-
-
-
+    
     /**
      * Execute the console command.
      *
@@ -419,7 +428,7 @@ class IgniteMigrationCommand extends Command
         $this->factory($name, $columns);
         $this->info('Factory for ' . $name . ' created successfully.');
 
-//        $this->views($name, $columns);
-//        $this->info('CRUD views for ' . $name . ' created successfully.');
+        $this->views($name);
+        $this->info('Views for ' . $name . ' created successfully.');
     }
 }
