@@ -81,7 +81,7 @@ class IgniteMigrationCommand extends Command
      */
     protected function getViewPartialsPath($name)
     {
-        return base_path() . '/resources/views/partials/' . Str::plural(strtolower($name)) . '/';
+        return base_path() . '/resources/views/' . Str::plural(strtolower($name)) . '/partials/';
     }
 
     /**
