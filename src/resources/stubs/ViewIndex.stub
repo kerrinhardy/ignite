@@ -7,7 +7,7 @@
 @section('content')
     <div class="max-w-7xl mx-auto">
         <div class="pt-4 pr-8 pb-0 text-right text-xs">
-            Count: {{ count($components) }}
+            Count: {{ count(${{modelNamePluralLowerCase}}) }}
         </div>
         <div class="m-4 bg-white shadow sm:rounded-lg">
             <div class="flex flex-col mb-4">

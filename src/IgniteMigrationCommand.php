@@ -264,28 +264,73 @@ class IgniteMigrationCommand extends Command
             $this->getStub('ViewIndex')
         );
 
-//        $modelFields = [];
-//
-//        foreach ($columns as $column => $type) {
-//            array_push($modelFields, $column);
-//        }
-//
-//        $viewShowTemplate = str_replace(
-//            [
-//                '{{modelNameSingularLowerCase}}',
-//                '{{modelName}}',
-//                '{{modelNamePlural}}',
-//                '{{modelFields}}'
-//            ],
-//            [
-//                strtolower($name),
-//                $name,
-//                Str::plural($name),
-//                $modelFields
-//            ],
-//            $this->getStub('ViewShow')
-//        );
-//
+        $viewShowTemplate = str_replace(
+            [
+                '{{modelName}}',
+                '{{modelNamePlural}}',
+                '{{modelNamePluralLowerCase}}',
+                '{{modelNameSingularLowerCase}}'
+            ],
+            [
+                $name,
+                Str::plural($name),
+                Str::plural(strtolower($name)),
+                strtolower($name)
+            ],
+            $this->getStub('ViewShow')
+        );
+
+        $viewFormTemplate = str_replace(
+            [
+                '{{modelName}}',
+                '{{modelNamePlural}}',
+                '{{modelNamePluralLowerCase}}',
+                '{{modelNameSingularLowerCase}}'
+            ],
+            [
+                $name,
+                Str::plural($name),
+                Str::plural(strtolower($name)),
+                strtolower($name)
+            ],
+            $this->getStub('ViewForm')
+        );
+
+
+        $viewCreateTemplate = str_replace(
+            [
+                '{{modelName}}',
+                '{{modelNamePlural}}',
+                '{{modelNamePluralLowerCase}}',
+                '{{modelNameSingularLowerCase}}'
+            ],
+            [
+                $name,
+                Str::plural($name),
+                Str::plural(strtolower($name)),
+                strtolower($name)
+            ],
+            $this->getStub('ViewCreate')
+        );
+
+
+        $viewEditTemplate = str_replace(
+            [
+                '{{modelName}}',
+                '{{modelNamePlural}}',
+                '{{modelNamePluralLowerCase}}',
+                '{{modelNameSingularLowerCase}}'
+            ],
+            [
+                $name,
+                Str::plural($name),
+                Str::plural(strtolower($name)),
+                strtolower($name)
+            ],
+            $this->getStub('ViewEdit')
+        );
+
+
         $directoryPath = $this->getViewsPath($name);
 
         if (!File::exists($directoryPath)) {
@@ -293,7 +338,10 @@ class IgniteMigrationCommand extends Command
         }
 
         file_put_contents($directoryPath . 'index.blade.php', $viewIndexTemplate);
-//        file_put_contents($directoryPath . 'show.blade.php', $viewShowTemplate);
+        file_put_contents($directoryPath . 'show.blade.php', $viewShowTemplate);
+        file_put_contents($directoryPath . 'partials/form.blade.php', $viewFormTemplate);
+        file_put_contents($directoryPath . 'partials/create.blade.php', $viewCreateTemplate);
+        file_put_contents($directoryPath . 'partials/edit.blade.php', $viewEditTemplate);
     }
 
     /**
