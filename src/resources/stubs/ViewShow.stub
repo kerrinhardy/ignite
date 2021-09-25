@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.page')
 
 @section('content')
     <div class="container mx-auto">
@@ -7,12 +7,12 @@
                 <div class="flex flex-col break-words bg-white border border-2 rounded shadow-md">
                     <div class="font-semibold bg-gray-200 text-gray-700 py-3 px-6 mb-0">
                         <div class="flex justify-between items-end w-full">
-                            <h2 class="text-grey font-normal">&&modelNamePlural&&</h2>
+                            <h2 class="text-grey font-normal">{{modelName}}</h2>
                         </div>
                     </div>
                     <div class="pt-4">
                         <ul>
-                        &&modelFields&&
+                        Model Fields go here
                         </ul>
                     </div>
                 </div>
