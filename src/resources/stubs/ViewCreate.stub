@@ -1,49 +1,26 @@
-extends('layouts.app')
+@extends('layouts.page')
+
+@section('title')
+    Add {{modelNameSingularLowerCase}}
+@endsection
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="page-header">
-                    <h1>Add New {{modelName}}</h1>
-                </div>
-
-                @forelse ($activities as $date => $activity)
-                    <h3 class="page-header">{{ $date }}</h3>
-
-                    @foreach ($activity as $record)
-                        @if (view()->exists("profiles.activities.{$record->type}"))
-                            @include ("profiles.activities.{$record->type}", ['activity' => $record])
-                        @endif
-                    @endforeach
-                @empty
-                    <p>There is no activity for this user yet.</p>
-                @endforelse
+    <div class="max-w-7xl mx-auto sm:px-4 lg:px-4">
+        <div class="m-4 bg-white overflow-hidden shadow sm:rounded-lg">
+            <div class="space-y-6">
+                <form action="{{ route('{{modelNamePluralLowerCase}}.index') }}" method="POST">
+                    @csrf
+                    @include('{{modelNamePluralLowerCase}}.partials.form', [
+                        '{{modelNameSingularLowerCase}}' => ${{modelNameSingularLowerCase}},
+                        'buttonText' => 'Add'
+                        ])
+                </form>
             </div>
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
 
-@extends('layout.layout')
-
-@section('content')
-
-
-
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name"  name="name">
-      </div>
-
-      @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-      @endif
-      <button type="submit" class="btn btn-primary">Save</button>
-    </form>
-@endsection
+    </script>
+@endpush

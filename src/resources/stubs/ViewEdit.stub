@@ -1,32 +1,29 @@
-<?php
+@extends('layouts.page')
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
+@section('title')
+    Edit {{ ${{modelNameSingularLowerCase}}->name }}
+@endsection
 
-class Create{{modelNamePlural}}Table extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('{{modelNamePluralLowerCase}}', function (Blueprint $table) {
-            $table->bigIncrements('id');{{columns}}
-            $table->timestamps();
-            $table->softDeletes();
-        });
-    }
+@section('content')
+    <div class="max-w-7xl mx-auto sm:px-4 lg:px-4">
+        <div class="m-4 bg-white overflow-hidden shadow sm:rounded-lg">
+            <div class="space-y-6">
+                <form action="{{ ${{modelNameSingularLowerCase}}->path() }}" method="POST">
+                    {{ method_field('PATCH') }}
+                    @csrf
+                    @include('{{modelNamePluralLowerCase}}.partials.form', [
+                                'buttonText' => 'Update'
+                                ])
+                </form>
+            </div>
+        </div>
+        @can('delete', App\{{modelName}}::class)
+            <p class="m-4 text-sm">Delete</p>
+        @endcan
+    </div>
+@endsection
+@push('scripts')
+    <script>
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('{{modelNamePluralLowerCase}}');
-    }
-}
+    </script>
+@endpush
